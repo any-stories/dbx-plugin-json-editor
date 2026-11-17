@@ -1,0 +1,103 @@
+
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+
+# ==========================================
+# DBX
+# ==========================================
+ui/
+.dbx-dev/
+*.dbxp
+*.artifact.json
+
+# ==========================================
+# Build output
+# ==========================================
+dist/
+dist-ssr/
+build/
+out/
+*.tsbuildinfo
+
+# ==========================================
+# Temporary files
+# ==========================================
+.tmp-*/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*.orig
+*.local
+
+# ==========================================
+# Vite
+# ==========================================
+.vite/
+vite.config.*.timestamp-*
+vite.config.*.temp-*
+
+# ==========================================
+# Environment variables
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+
+# ==========================================
+# Local debug artifacts (CDP steps, screenshots)
+# ==========================================
+scripts/dbg-*
+scripts/steps-*
+scripts/verify-*
+scripts/regress.json
+scripts/previews.json
+scripts/q*.json
+scripts/cdp.mjs
+
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==========================================
+# Testing
+# ==========================================
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# ==========================================
+# Cache
+# ==========================================
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# ==========================================
+# IDE
+# ==========================================
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# ==========================================
+# OS
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini

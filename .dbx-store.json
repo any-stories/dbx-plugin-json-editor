@@ -1,0 +1,17 @@
+{
+  "name": "JSON Editor",
+  "description": "A professional JSON editing workspace featuring Code, Tree and Table views, dual-pane editing, formatting, validation and diff.",
+  "icon": "assets/plugin.svg",
+  "tags": ["json", "editor", "tools"],
+  "permissions": ["host.workbench", "host.storage"],
+  "source": "https://github.com/any-stories/dbx-plugin-json-editor",
+  "homepage": "https://github.com/any-stories/dbx-plugin-json-editor",
+  "license": "MIT",
+  "releaseNotes": "Initial release.",
+  "localizations": {
+    "zh-CN": {
+      "name": "JSON 编辑器",
+      "description": "专业 JSON 编辑工作台: Code / Tree / Table 三视图, 双面板编辑, 格式化, 校验与差异比较"
+    }
+  }
+}

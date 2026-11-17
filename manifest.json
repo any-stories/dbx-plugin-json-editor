@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/t8y2/dbx/main/plugins/manifest.schema.json",
+  "manifest_version": 1,
+  "id": "org.story.dbx-json-editor",
+  "name": "JSON Editor",
+  "version": "0.1.0",
+  "publisher": "story",
+  "description": "A professional JSON editing workspace featuring Code, Tree and Table views, dual-pane editing, formatting, validation and diff.",
+  "icon": "assets/plugin.svg",
+  "source": "https://github.com/any-stories/dbx-plugin-json-editor",
+  "homepage": "https://github.com/any-stories/dbx-plugin-json-editor",
+  "permissions": ["host.workbench", "host.storage"],
+  "engines": {
+    "dbx": ">=0.5.68",
+    "host_api": "1"
+  },
+  "entrypoints": {
+    "ui": {
+      "root": "ui",
+      "entry": "ui/index.html"
+    }
+  },
+  "contributions": [
+    {
+      "type": "workbench",
+      "id": "org.story.dbx-json-editor.workbench",
+      "label": "JSON Editor",
+      "description": "A sandboxed JSON editing workspace with dual-pane support."
+    }
+  ],
+  "localizations": {
+    "zh-CN": {
+      "name": "JSON 编辑器",
+      "description": "专业 JSON 编辑工作台: Code / Tree / Table 三视图, 双面板编辑, 格式化, 校验与差异比较",
+      "contributions": {
+        "org.story.dbx-json-editor.workbench": {
+          "label": "DBX JSON 编辑器",
+          "description": "沙箱内运行的 JSON 编辑工作台, 支持双面板编辑."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3953 @@
+/* app.css: Liquid Glass 材质皮肤*/
+
+/* ---------- 设计令牌: 亮色 ---------- */
+:root {
+  color-scheme: light;
+
+  /* 字体与字号: 拉丁字形沿用系统 UI 字体, CJK 依次回落到各平台默认中文黑体
+     (macOS 苹方 / Windows 雅黑 / Linux 思源黑体), 三平台都有可读的中文渲染 */
+  --main-font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC",
+    "Helvetica Neue", Arial, sans-serif;
+  /* 库组件 (GlassCard / GlassMenu / GlassButton) 读 --lg-font, 统一到同一套三平台字体回退 */
+  --lg-font: var(--main-font-family);
+  /* 横向 Ellipsis (lucide 三点): 编辑器自渲染的按钮无法塞 React 图标, 用 mask 统一成同一枚 SVG */
+  --lg-ellipsis-icon: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Ccircle%20cx='5'%20cy='12'%20r='1.8'/%3E%3Ccircle%20cx='12'%20cy='12'%20r='1.8'/%3E%3Ccircle%20cx='19'%20cy='12'%20r='1.8'/%3E%3C/svg%3E");
+  --main-font-size: 13px;
+  --main-color: #1a1f2b;
+
+  /* 文本层级 */
+  --lg-text: #14181f;
+  --lg-text-2: #4c5464;
+  --lg-text-3: #7b8494;
+  --lg-text-inverse: #ffffff;
+
+  /* 强调色与语义色 (macOS 系统色) */
+  --lg-accent: #0a84ff;
+  --lg-accent-strong: #0067d8;
+  --lg-accent-soft: rgb(10 132 255 / 0.12);
+  --lg-danger: #ff453a;
+  --lg-danger-soft: rgb(255 69 58 / 0.12);
+  --lg-success: #30b158;
+  --lg-warning: #ff9f0a;
+
+  /* 玻璃材质 */
+  --lg-blur: 20px;
+  --lg-blur-strong: 34px;
+  --lg-saturate: 1.75;
+  /* 组件库读取的饱和度变量, 与 --lg-saturate 同值 */
+  --lg-saturation: 1.75;
+  --lg-glass: linear-gradient(
+    157deg,
+    rgb(255 255 255 / 0.7) 0%,
+    rgb(255 255 255 / 0.44) 52%,
+    rgb(255 255 255 / 0.6) 100%
+  );
+  --lg-glass-strong: linear-gradient(157deg, rgb(255 255 255 / 0.94) 0%, rgb(255 255 255 / 0.84) 100%);
+  --lg-glass-quiet: rgb(255 255 255 / 0.42);
+  --lg-border: rgb(255 255 255 / 0.72);
+  --lg-hairline: rgb(15 23 42 / 0.09);
+  --lg-inset: inset 0 1px 0 rgb(255 255 255 / 0.92);
+  --lg-shadow-1: 0 1px 2px rgb(15 23 42 / 0.06), 0 10px 24px -14px rgb(15 23 42 / 0.3);
+  --lg-shadow-2: 0 28px 64px -24px rgb(15 23 42 / 0.46), 0 3px 12px rgb(15 23 42 / 0.12);
+  --lg-shadow-pop: 0 18px 44px -16px rgb(15 23 42 / 0.35), 0 2px 8px rgb(15 23 42 / 0.1);
+
+  /* 交互态 */
+  --lg-hover: rgb(17 24 39 / 0.06);
+  --lg-press: rgb(17 24 39 / 0.11);
+  --lg-well: rgb(17 24 39 / 0.05);
+
+  /* 表面 */
+  --lg-surface: rgb(255 255 255 / 0.5);
+  --lg-surface-solid: #ffffff;
+  --lg-field: rgb(255 255 255 / 0.62);
+
+  /* 圆角 */
+  --lg-radius-xl: 22px;
+  --lg-radius-lg: 16px;
+  --lg-radius-md: 11px;
+  --lg-radius-sm: 8px;
+  --lg-radius-pill: 999px;
+
+  /* 氛围背景: 固定光斑 (玻璃需要有东西可折射).
+     光斑偏四角, 中心留白: 玻璃边沿能折出色带, 编辑器正文区又不会被染色 */
+  --lg-ambient:
+    radial-gradient(42% 38% at 3% -6%, rgb(96 148 255 / 0.95) 0%, rgb(96 148 255 / 0) 62%),
+    radial-gradient(26% 24% at 20% 10%, rgb(206 158 255 / 0.5) 0%, rgb(206 158 255 / 0) 64%),
+    radial-gradient(36% 32% at 102% -4%, rgb(255 132 196 / 0.9) 0%, rgb(255 132 196 / 0) 62%),
+    radial-gradient(24% 22% at 104% 30%, rgb(255 190 140 / 0.45) 0%, rgb(255 190 140 / 0) 64%),
+    radial-gradient(38% 34% at 99% 103%, rgb(72 224 200 / 0.85) 0%, rgb(72 224 200 / 0) 62%),
+    radial-gradient(22% 20% at 62% 98%, rgb(160 140 255 / 0.35) 0%, rgb(160 140 255 / 0) 62%),
+    radial-gradient(30% 28% at -2% 98%, rgb(255 186 120 / 0.78) 0%, rgb(255 186 120 / 0) 60%);
+  --lg-ambient-base: linear-gradient(168deg, #e8eefb 0%, #eef0fa 46%, #f8edf6 100%);
+
+  /* 编辑器 (vanilla-jsoneditor 消费的 --jse-* 契约) */
+  --jse-theme-color: #0a84ff;
+  --jse-theme-color-highlight: #3f9bff;
+  --jse-background-color: rgb(255 255 255 / 0.62);
+  --jse-text-color: #2a3140;
+  --jse-text-color-inverse: #ffffff;
+  --jse-main-border: 1px solid rgb(15 23 42 / 0.1);
+  --jse-menu-color: #ffffff;
+  --jse-panel-background: rgb(255 255 255 / 0.55);
+  --jse-panel-background-border: 1px solid rgb(15 23 42 / 0.08);
+  --jse-panel-border: 1px solid rgb(15 23 42 / 0.08);
+  --jse-error-color: #d92b1f;
+  --jse-input-background: rgb(255 255 255 / 0.75);
+  --jse-input-border: 1px solid rgb(15 23 42 / 0.12);
+  --jse-text-readonly: #8b93a1;
+  --jse-context-menu-background: rgb(255 255 255 / 0.9);
+  /* 浮层文字色契约: tooltip / contextmenu / 导航栏下拉 / tag 等 jse 原生浮层的
+     color 用 var(--jse-context-menu-color, var(--jse-text-color-inverse, #fff)).
+     不改全局 --jse-text-color-inverse (按钮/tag 等深底白字), 而是在这一层
+     把"玻璃底上的浮层文字"统一成主题文字色: 变量定义权重无关, 避开 jse scoped
+     选择器 (0,2,0) 覆盖 body .jse-tooltip (0,1,1) 的问题. 浅色=深字, 深色=浅字. */
+  --jse-context-menu-color: var(--lg-text);
+  --jse-context-menu-pointer-color: var(--lg-text);
+  --jse-navigation-bar-dropdown-color: var(--lg-text);
+  --jse-modal-background: rgb(255 255 255 / 0.9);
+  --jse-modal-code-background: rgb(17 24 39 / 0.05);
+  /* jse 浮层的实色底都由这些变量供给, 且它的 svelte scoped 选择器最高到 (0,7,1),
+     单靠 CSS 覆盖会被压回. 直接在契约层换成玻璃色, 权重无关且集中在一处定义 */
+  --jse-table-header-background: rgb(255 255 255 / 0.42);
+  --jse-button-primary-background: rgb(255 255 255 / 0.42);
+  --jse-button-primary-background-highlight: rgb(255 255 255 / 0.66);
+  --jse-button-primary-color: var(--lg-text);
+  --jse-message-success-background: rgb(255 255 255 / 0.66);
+  --jse-message-error-background: rgb(255 255 255 / 0.66);
+  --jse-message-warning-background: rgb(255 255 255 / 0.66);
+  --jse-message-info-background: rgb(255 255 255 / 0.66);
+  --jse-message-success-color: var(--lg-text);
+  --jse-message-error-color: var(--lg-text);
+  --jse-message-warning-color: var(--lg-text);
+  --jse-message-info-color: var(--lg-text);
+  --jse-color-picker-background: rgb(255 255 255 / 0.86);
+  --jse-navigation-bar-background: rgb(17 24 39 / 0.12);
+  --jse-navigation-bar-background-highlight: rgb(17 24 39 / 0.2);
+  --jse-selection-background-color: rgb(10 132 255 / 0.16);
+  --jse-selection-background-inactive-color: rgb(10 132 255 / 0.1);
+  --jse-hover-background-color: rgb(17 24 39 / 0.05);
+  --jse-font-family-mono: "SF Mono", sf-mono, ui-monospace, consolas, menlo, monaco, "Ubuntu Mono", monospace;
+  --jse-font-size-mono: 13px;
+}
+
+/* ---------- 设计令牌: 暗色 (body.jse-theme-dark) ---------- */
+body.jse-theme-dark {
+  color-scheme: dark;
+
+  --main-color: #e8ecf4;
+  --lg-text: #f2f5fa;
+  --lg-text-2: #b9c2d1;
+  --lg-text-3: #8b95a5;
+
+  --lg-accent-soft: rgb(10 132 255 / 0.22);
+  --lg-danger-soft: rgb(255 69 58 / 0.22);
+
+  --lg-glass: linear-gradient(
+    157deg,
+    rgb(150 175 220 / 0.18) 0%,
+    rgb(255 255 255 / 0.04) 52%,
+    rgb(140 180 255 / 0.12) 100%
+  );
+  --lg-glass-strong: linear-gradient(157deg, rgb(54 60 74 / 0.94) 0%, rgb(35 39 49 / 0.9) 100%);
+  --lg-glass-quiet: rgb(255 255 255 / 0.08);
+  --lg-border: rgb(255 255 255 / 0.14);
+  --lg-hairline: rgb(255 255 255 / 0.12);
+  --lg-inset: inset 0 1px 0 rgb(255 255 255 / 0.14);
+  --lg-shadow-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 28px -16px rgb(0 0 0 / 0.7);
+  --lg-shadow-2: 0 30px 70px -26px rgb(0 0 0 / 0.8), 0 3px 14px rgb(0 0 0 / 0.5);
+  --lg-shadow-pop: 0 20px 48px -18px rgb(0 0 0 / 0.7), 0 2px 10px rgb(0 0 0 / 0.45);
+
+  --lg-hover: rgb(255 255 255 / 0.09);
+  --lg-press: rgb(255 255 255 / 0.16);
+  --lg-well: rgb(0 0 0 / 0.22);
+
+  --lg-surface: rgb(255 255 255 / 0.05);
+  --lg-surface-solid: #16191f;
+  --lg-field: rgb(255 255 255 / 0.08);
+
+  --lg-ambient:
+    radial-gradient(54% 48% at 4% -6%, rgb(42 96 200 / 0.9) 0%, rgb(42 96 200 / 0) 60%),
+    radial-gradient(48% 44% at 100% 0%, rgb(126 54 150 / 0.85) 0%, rgb(126 54 150 / 0) 62%),
+    radial-gradient(52% 48% at 92% 104%, rgb(18 126 116 / 0.75) 0%, rgb(18 126 116 / 0) 60%),
+    radial-gradient(46% 44% at 2% 104%, rgb(146 86 32 / 0.6) 0%, rgb(146 86 32 / 0) 58%);
+  --lg-ambient-base: linear-gradient(168deg, #0a0e16 0%, #0b0f18 50%, #120d16 100%);
+
+  /* 编辑器暗色 (覆盖 jse-theme-dark 自带的 #1e1e1e) */
+  --jse-background-color: rgb(20 23 30 / 0.62);
+  --jse-text-color: #d5dbe6;
+  --jse-main-border: 1px solid rgb(255 255 255 / 0.12);
+  /* 菜单条为透明玻璃, --jse-menu-color 不再承担实色底, 只用于分段控件的描边与选中底 */
+  --jse-menu-color: rgb(255 255 255 / 0.2);
+  --jse-panel-background: rgb(255 255 255 / 0.06);
+  --jse-panel-background-border: 1px solid rgb(255 255 255 / 0.1);
+  --jse-panel-border: 1px solid rgb(255 255 255 / 0.1);
+  --jse-input-background: rgb(255 255 255 / 0.1);
+  --jse-input-border: 1px solid rgb(255 255 255 / 0.16);
+  --jse-text-readonly: #8b93a1;
+  --jse-context-menu-background: rgb(44 49 61 / 0.94);
+  /* 浮层文字色契约: 与浅色同一套变量, 深色=浅字 (见浅色段注释),
+     无需再以 body.jse-theme-dark .jse-tooltip (0,2,1) 单独覆盖 */
+  --jse-context-menu-color: var(--lg-text);
+  --jse-context-menu-pointer-color: var(--lg-text);
+  --jse-navigation-bar-dropdown-color: var(--lg-text);
+  --jse-modal-background: rgb(32 36 46 / 0.94);
+  --jse-modal-code-background: rgb(255 255 255 / 0.08);
+  /* 暗色下同一批浮层变量换成暗玻璃 (见亮色段的注释) */
+  --jse-table-header-background: rgb(255 255 255 / 0.08);
+  --jse-button-primary-background: rgb(255 255 255 / 0.1);
+  --jse-button-primary-background-highlight: rgb(255 255 255 / 0.18);
+  --jse-button-primary-color: var(--lg-text);
+  --jse-message-success-background: rgb(30 34 44 / 0.82);
+  --jse-message-error-background: rgb(30 34 44 / 0.82);
+  --jse-message-warning-background: rgb(30 34 44 / 0.82);
+  --jse-message-info-background: rgb(30 34 44 / 0.82);
+  --jse-message-success-color: var(--lg-text);
+  --jse-message-error-color: var(--lg-text);
+  --jse-message-warning-color: var(--lg-text);
+  --jse-message-info-color: var(--lg-text);
+  --jse-color-picker-background: rgb(30 34 44 / 0.86);
+  --jse-navigation-bar-background: rgb(0 0 0 / 0.32);
+  --jse-navigation-bar-background-highlight: rgb(255 255 255 / 0.2);
+  --jse-selection-background-color: rgb(10 132 255 / 0.32);
+  --jse-selection-background-inactive-color: rgb(10 132 255 / 0.2);
+  --jse-hover-background-color: rgb(255 255 255 / 0.08);
+}
+
+/* 编辑器暗色底板: .jse-theme-dark 自带的 #1e1e1e 是单类选择器, 这里用双类覆盖为半透明玻璃底 */
+.jse-host.jse-theme-dark {
+  --jse-background-color: rgb(14 17 24 / 0.58);
+  --jse-text-color: #d7dce7;
+  --jse-panel-background: rgb(255 255 255 / 0.06);
+  --jse-main-border: 1px solid rgb(255 255 255 / 0.12);
+  /* jse 自带暗色主题把 --jse-menu-color 定义为 #fff 并挂在 .jse-theme-dark 自身,
+     必须在本层重新声明才能生效 (继承值会被元素自身声明覆盖) */
+  --jse-menu-color: rgb(255 255 255 / 0.2);
+  --jse-input-background: rgb(255 255 255 / 0.1);
+  --jse-input-border: 1px solid rgb(255 255 255 / 0.16);
+}
+
+/* ---------- 基础 ---------- */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--main-font-family);
+  font-size: var(--main-font-size);
+  color: var(--lg-text);
+  background: var(--lg-ambient-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  height: 100%;
+}
+
+button {
+  font-family: var(--main-font-family);
+  font-size: var(--main-font-size);
+}
+
+/* 图标: Lucide 线性图标 (组件库参数在 Icon.tsx 里统一), 跟随字号并以 1em 光学尺寸对齐文字 */
+.icon {
+  display: inline-block;
+  flex: none;
+  vertical-align: -0.135em;
+  overflow: visible;
+}
+
+/* 细滚动条 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(120 128 144 / 0.45) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(120 128 144 / 0.4);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: var(--lg-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(120 128 144 / 0.62);
+  background-clip: content-box;
+}
+
+/* ---------- 应用外壳 + 氛围背景 ---------- */
+.app {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--lg-text);
+}
+
+/* 固定的光斑层: 玻璃表面靠它折射出层次, 不随内容滚动 */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--lg-ambient), var(--lg-ambient-base);
+  pointer-events: none;
+}
+
+/* ---------- 顶栏 ---------- */
+.application-menu {
+  position: relative;
+  z-index: 6;
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin: 10px 14px 0;
+  padding: 0 10px 0 14px;
+  box-sizing: border-box;
+  border-radius: var(--lg-radius-lg);
+  --lg-glass-fill: rgb(255 255 255 / 0.55);
+  --lg-glass-blur: 20px;
+  --lg-glass-shadow: var(--lg-shadow-1);
+  color: var(--lg-text);
+  /* 顶栏是应用外壳而非可编辑内容, 禁止选中其中的文字 (如品牌字标 "JSON Editor") */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.jse-theme-dark .application-menu {
+  --lg-glass-fill: rgb(26 29 36 / 0.55);
+}
+
+.application-menu__nav {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* 品牌字标: 可逐字点击的渐变文字 (点字迸出泡泡 / 全点完泛泡沫). */
+.application-menu__brand {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  white-space: nowrap;
+  user-select: none;
+  cursor: default;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 22px;
+  letter-spacing: -0.005em;
+  --brand-ink: linear-gradient(
+    to right,
+    rgb(255 255 255 / 1) 0%,
+    rgb(244 246 250 / 0.98) 80%,
+    rgb(224 230 240 / 0.94) 100%
+  );
+}
+
+body.jse-theme-dark .application-menu__brand {
+  /* 暗色更透: stop 透明度再降一档 */
+  --brand-ink: linear-gradient(
+    to right,
+    rgb(255 255 255 / 0.85) 0%,
+    rgb(228 228 234 / 0.55) 52%,
+    rgb(161 161 170 / 0.4) 100%
+  );
+}
+
+/* 字符槽: 加 padding / 负 margin 扩大点击热区, 布局不变. 放大完全由组件
+   逐帧直写 transform (translate3d 平移到数值模型算出的位置 + scale 底边
+   锚定向上长大), CSS 不挂任何 transform/margin 过渡 (会跟逐帧写入打架);
+   transform 使槽自成层叠上下文, 影子的 z-index: -1 仍垫在本槽字符后面 */
+.brand__slot {
+  position: relative;
+  display: inline-block;
+  padding: 3px 1px;
+  margin: -3px -1px;
+  transform-origin: 50% 100%;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.brand__slot--space {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* 槽影子: ::after , 纯色 + 微模糊 + 下移 1px.
+   inset 0 再补同样的 padding, 让影子文字与真字符逐像素对齐.
+   z-index: -1 把影子垫到渐变字符后面 (::after 在绘制顺序上天然盖过
+   字符, 二者几乎完全重合 (仅差 1px), 22% 的深灰盖上去会把整词蒙成
+   纯灰 (bg-clip 渐变"消失"). 垫到后面后, 影子从字形边缘露出, 反而
+   增强亮色主题下的可读性. (transform 使槽自成层叠上下文, 影子
+   不会掉到玻璃底色之下.) */
+.brand__slot::after {
+  content: attr(data-char);
+  position: absolute;
+  inset: 0;
+  padding: 3px 1px;
+  color: rgb(15 23 42 / 0.22);
+  transform: translateY(1px);
+  filter: blur(0.5px);
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 320ms ease;
+  transition-delay: var(--brand-restore-delay, 0ms);
+}
+
+/* 字符: 渐变 bg-clip:text. 渐变切片经槽上的 --brand-bgw (整词可视宽,
+   Dock 放大时随之拉伸) / --brand-bgx (本字可视左缘反向平移) 控制:
+   组件静止时写自然值, Dock 帧循环逐帧覆盖; 恢复的级联延迟经 CSS 变量
+   --brand-restore-delay 下发 (含 ::after) */
+.brand__char {
+  position: relative;
+  background-image: var(--brand-ink);
+  background-size: var(--brand-bgw, var(--brand-word-w, 100%)) 100%;
+  background-position: var(--brand-bgx, 0px);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  transition: opacity 320ms ease;
+  transition-delay: var(--brand-restore-delay, 0ms);
+}
+
+/* 字符消隐: 原地淡出, 不缩小/不上浮, 保持相邻字符点击目标稳定
+   (槽位始终留在布局里, 恢复也是原地淡入); 消隐后该槽不再接收
+   点击 (pointer-events:none), 避免同一位置反复点让字无限复活, 只等级联自动恢复 */
+.brand__slot.is-gone {
+  pointer-events: none;
+}
+
+.brand__slot.is-gone::after {
+  opacity: 0;
+}
+
+.brand__slot.is-gone .brand__char {
+  opacity: 0;
+}
+
+/* 字符碎片: 原字符的复制片, 同一字形 + 同一整词渐变 (复用
+   --brand-word-w 与逐字偏移), 颜色和原字完全一致, 亮暗主题自动跟随
+   --brand-ink; 沿圆周方向向四周飞散, 带旋转/缩小/淡出, 方向与距离经
+   --sx/--sy 注入, 播完即被移除 */
+.brand__shard {
+  position: absolute;
+  background-image: var(--brand-ink);
+  background-size: var(--brand-word-w, 100%) 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  animation: brand-shard 600ms cubic-bezier(0.2, 0.6, 0.4, 1) both;
+}
+
+@keyframes brand-shard {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.95;
+  }
+  60% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(var(--sx), var(--sy)) rotate(var(--rot)) scale(0.55);
+    opacity: 0;
+  }
+}
+
+/* 泡泡: 同一种"肥皂泡"画法 (左上高光 + 冷蓝反光 + 薄虹彩 (粉/青) 边缘,
+   中心近乎全透), 两种形态:
+   pop   点击字符时从点击处炸出的一小簇: 先向四周迸开, 再轻摆上升, 末端
+        骤然放大即"破裂"; 小而快;
+   foam  全部点完后整词泛起的泡沫: 大而慢, 升得更高, 轻轻散掉.
+   迸开/横漂/上升经 --bx/--by/--rise 注入, 播完即被移除. */
+.brand__bubble {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.95) 0%, rgb(255 255 255 / 0) 20%),
+    radial-gradient(circle at 72% 82%, rgb(186 224 255 / 0.4) 0%, rgb(255 255 255 / 0) 45%),
+    radial-gradient(
+      circle at 50% 50%,
+      rgb(255 255 255 / 0.04) 52%,
+      rgb(255 255 255 / 0.3) 70%,
+      rgb(255 190 238 / 0.2) 82%,
+      rgb(178 255 224 / 0.24) 93%,
+      rgb(255 255 255 / 0.55) 100%
+    );
+}
+
+.brand__bubble--pop {
+  animation: brand-bubble-pop 850ms cubic-bezier(0.3, 0.6, 0.4, 1) both;
+}
+
+@keyframes brand-bubble-pop {
+  0% {
+    transform: translate(0, 0) scale(0.3);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  /* 先向四周迸开 (bx/by), 随后转成上升 */
+  35% {
+    transform: translate(calc(var(--bx) * 0.8), calc(var(--by) * 0.9 - var(--rise) * 0.3)) scale(0.85);
+  }
+  70% {
+    transform: translate(var(--bx), calc(var(--by) - var(--rise) * 0.75)) scale(0.95);
+    opacity: 0.9;
+  }
+  /* 末端: 骤然放大 + 消散 = 破裂 */
+  100% {
+    transform: translate(calc(var(--bx) * 1.1), calc(var(--by) - var(--rise))) scale(1.25);
+    opacity: 0;
+  }
+}
+
+.brand__bubble--foam {
+  animation: brand-bubble-foam 1600ms cubic-bezier(0.35, 0.5, 0.45, 1) both;
+}
+
+@keyframes brand-bubble-foam {
+  0% {
+    transform: translate(0, 8px) scale(0.3);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  35% {
+    transform: translate(calc(var(--bx) * 0.45), calc(var(--rise) * -0.35)) scale(0.85);
+  }
+  65% {
+    transform: translate(calc(var(--bx) * -0.3), calc(var(--rise) * -0.7)) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(var(--bx), calc(var(--rise) * -1)) scale(1.12);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand__char,
+  .brand__slot::after {
+    transition: none;
+  }
+
+  .brand__shard,
+  .brand__bubble {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
+.application-menu__space {
+  flex: 1;
+}
+
+/* ---------- 顶栏 Settings: 直接用库 GlassMenu (与 panel-menu / 上下文菜单同一组件) ----------
+   库触发器是 GlassButton, icon 传 "图标 + Settings + caret" 整组; 浮层是 absolute 挂在
+   .lg-menu-anchor 内, 因此只需压住 morph 的内联 opacity/scale 并把菜单下移到按钮正下方 */
+.application-menu .settings-menu-glass.lg-menu-anchor {
+  display: inline-flex;
+  flex: none;
+}
+
+.application-menu .settings-menu-glass > .lg-button {
+  --lg-h: 32px;
+  --lg-glass-fill: rgb(255 255 255 / 0.42);
+  width: auto;
+  min-width: 0;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--lg-radius-lg);
+  gap: 0;
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.application-menu .settings-menu-glass > .lg-button:hover,
+.application-menu .settings-menu-glass > .lg-button:focus-visible {
+  color: var(--lg-text);
+}
+
+/* 库 morph 会把触发器内联 opacity 渐变到 0 (看起来 "原按钮消失"), 这里压住;
+   展开态加深一点玻璃底, 替代按钮形变反馈 */
+.application-menu .settings-menu-glass > .lg-button[aria-expanded="true"] {
+  opacity: 1 !important;
+  scale: none !important;
+  --lg-glass-fill: rgb(255 255 255 / 0.66);
+  color: var(--lg-text);
+}
+
+/* icon 里是整组触发器, 不能被库锁成 14px 方格 */
+.application-menu .settings-menu-glass .lg-button__icon {
+  width: auto;
+  height: auto;
+}
+
+.application-menu .settings-menu-glass .settings-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* 库默认 top: 0 (菜单从触发器顶面长出), 下移到按钮底部再展开 */
+.application-menu .settings-menu-glass .lg-menu-surface {
+  top: calc(100% + 6px);
+}
+
+.application-menu .settings-menu-glass .lg-menu__item {
+  min-height: 32px;
+  font-size: 13px;
+}
+
+.application-menu .settings-menu-glass .lg-menu__item:has(.ctx-menu-sep) {
+  min-height: 9px;
+  padding: 0 6px;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.application-menu .settings-menu-glass .ctx-menu-sep {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--lg-hairline);
+}
+
+.application-menu .settings-menu-glass .lg-menu__item:has(.ctx-menu-header) {
+  min-height: 22px;
+  padding: 2px 10px 0;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.application-menu .settings-menu-glass .ctx-menu-header {
+  color: var(--lg-text-3);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.jse-theme-dark .application-menu .settings-menu-glass > .lg-button {
+  --lg-glass-fill: rgb(255 255 255 / 0.1);
+  color: var(--lg-text-2);
+}
+
+body.jse-theme-dark .application-menu .settings-menu-glass > .lg-button[aria-expanded="true"] {
+  --lg-glass-fill: rgb(255 255 255 / 0.16);
+  color: var(--lg-text);
+}
+
+/* ---------- 布局 ---------- */
+.app .body {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 12px 14px 14px;
+}
+
+.app .body .contents-panel {
+  flex: 1;
+  display: flex;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* ---------- 面板: 玻璃卡片 ---------- */
+/* 面板卡片 = 液态玻璃根节点 (Panel.tsx 里 .lg-glass + useRefraction 烤折射图),
+   这里经库的逐表面覆盖变量调 fill / blur / 阴影, 只留尺寸 / 圆角 */
+.app .body .contents-panel .left-panel,
+.app .body .contents-panel .right-panel {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  border-radius: var(--lg-radius-xl);
+  --lg-glass-fill: rgb(255 255 255 / 0.24);
+  --lg-glass-blur: 20px;
+  --lg-glass-shadow: var(--lg-shadow-1);
+}
+
+body.jse-theme-dark .app .body .contents-panel .left-panel,
+body.jse-theme-dark .app .body .contents-panel .right-panel {
+  --lg-glass-fill: rgb(20 23 30 / 0.56);
+}
+
+/* 拖动分隔条时折射暂停 (useRefraction enabled=false, 库移除内联折射变量),
+   backdrop-filter 退回纯模糊, 观感上只少了边缘折射, 不会闪成透明 */
+.contents-panel.is-resizing .left-panel,
+.contents-panel.is-resizing .right-panel {
+  --lg-glass-fill: rgb(255 255 255 / 0.42);
+}
+
+body.jse-theme-dark .contents-panel.is-resizing .left-panel,
+body.jse-theme-dark .contents-panel.is-resizing .right-panel {
+  --lg-glass-fill: rgb(20 23 30 / 0.62);
+}
+
+.app .body .contents-panel .left-panel {
+  margin-right: 12px;
+}
+
+.app .body .contents-panel .right-panel {
+  margin-left: 12px;
+}
+
+/* 面板收起/展开过渡: 面板常驻挂载, 宽度恒由内联 flex 表达; 收起 = flex-grow 收到 0,
+   由这里的过渡补完最后一段, 因此拖动越界松手时不会瞬间跳成单面板.
+   overflow-x: clip 只裁剪横向溢出 (极窄面板的菜单条/编辑器不压到隔壁),
+   纵向保持 visible, 面板内的下拉菜单照常展开; 且不产生滚动容器 */
+.app .body .contents-panel .left-panel,
+.app .body .contents-panel .right-panel {
+  overflow-x: clip;
+  transition:
+    flex-grow 240ms cubic-bezier(0.32, 0.72, 0, 1),
+    margin 240ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 240ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* 拖拽中关闭过渡: 比例必须 1:1 跟手 */
+.app .body .contents-panel.is-resizing .left-panel,
+.app .body .contents-panel.is-resizing .right-panel {
+  transition: none;
+}
+
+/* 收起态: 贴边距同时归零 (卸载面板的效果), 动画播完再隐藏可见性 */
+.app .body .contents-panel .left-panel.is-collapsed,
+.app .body .contents-panel .right-panel.is-collapsed {
+  margin-right: 0;
+  margin-left: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    flex-grow 240ms cubic-bezier(0.32, 0.72, 0, 1),
+    margin 240ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 240ms cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 260ms;
+}
+
+.app .body .contents-panel .center-panel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* 宽度由操作条内容决定, 不参与主轴伸缩: 并排时恒为窄条, 不会被内容撑宽 */
+  flex: 0 0 auto;
+  gap: 12px;
+}
+
+.app .body .contents-panel .center-panel .empty-space-top {
+  flex: 1;
+}
+
+/* 分隔条: 玻璃把手, 悬停出现强调色胶囊 */
+.app .body .contents-panel .center-panel .draggable-splitter {
+  flex: 4;
+  margin: 2px 0;
+  cursor: col-resize;
+  border-radius: var(--lg-radius-pill);
+  color: var(--lg-text-3);
+  display: inline-flex;
+  align-items: center;
+  font-size: 18px;
+  touch-action: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.app .body .contents-panel .center-panel .draggable-splitter .draggable-splitter-icon {
+  width: 100%;
+  text-align: center;
+}
+
+.app .body .contents-panel .center-panel .draggable-splitter:hover {
+  background: var(--lg-accent-soft);
+  color: var(--lg-accent);
+}
+
+body.jse-theme-dark .app .body .contents-panel .center-panel .draggable-splitter:hover {
+  color: var(--lg-accent-strong);
+}
+
+/* ---------- 面板 (.panel) ---------- */
+.panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 面板菜单 (.panel-menu) ---------- */
+/* position: relative : 菜单绘制层级高于常驻的 .file-drop 绝对定位遮罩,
+   否则 New / Full screen 等非定位按钮会被遮罩截获点击 */
+.panel .panel-menu {
+  position: relative;
+  /* container-type 建立独立的层叠上下文, 显式抬升一级保证菜单与下拉仍高于 .file-drop 遮罩 */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 46px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  background: transparent;
+  color: var(--lg-text-2);
+  border-radius: var(--lg-radius-xl) var(--lg-radius-xl) 0 0;
+  border-bottom: 1px solid var(--lg-hairline);
+  /* 建立宽度查询上下文: 面板宽度由 splitter 决定, 与视口无关,
+     面板菜单按自身实际宽度收拢按钮, 不依赖视口断点 */
+  container-type: inline-size;
+}
+
+.panel .panel-menu .document-details {
+  position: relative;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  /* 允许收缩到内容宽度以下, 由文档名截断吸收窄面板的宽度差 */
+  min-width: 0;
+}
+
+.panel .panel-menu .menu-button {
+  background: transparent;
+  color: inherit;
+  border: none;
+  border-radius: var(--lg-radius-sm);
+  margin: 0;
+  padding: 7px 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.panel .panel-menu .menu-button:hover,
+.panel .panel-menu .menu-button:focus-visible {
+  background: var(--lg-hover);
+  color: var(--lg-text);
+}
+
+.panel .panel-menu .menu-button:disabled {
+  color: var(--lg-text-3);
+  opacity: 0.55;
+}
+
+.panel .panel-menu .menu-button:disabled:hover,
+.panel .panel-menu .menu-button:disabled:focus {
+  background: none;
+  cursor: default;
+}
+
+/* ---------- panel-menu 五个按钮: 统一用库 GlassButton / GlassMenu ---------- */
+/* Open / Save / Copy 的触发器是库 GlassMenu 里的 GlassButton, New / Full screen 直接是 GlassButton;
+   五颗共用同一条几何规则 (30px 高 / 8px 圆角 / 0.42 白玻璃 / 12.5px 字), 不再有裸 .menu-button */
+.panel .panel-menu .panel-menu-glass.lg-menu-anchor {
+  display: inline-flex;
+  flex: none;
+}
+
+.panel .panel-menu .buttons .lg-button {
+  --lg-h: 30px;
+  --lg-glass-fill: rgb(255 255 255 / 0.42);
+  width: auto;
+  min-width: 0;
+  height: 30px;
+  padding: 0 9px;
+  border-radius: var(--lg-radius-sm);
+  gap: 6px;
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.panel .panel-menu .buttons .lg-button:hover,
+.panel .panel-menu .buttons .lg-button:focus-visible {
+  color: var(--lg-text);
+}
+
+/* 库的 GlassMenu 用 morph 动画把触发器 inline opacity 渐变到 0 (看起来 "原按钮消失"),
+   再让玻璃面板从按钮原形长出来. 在 menubar 里这会留下一个空位、菜单又落在别处;
+   这里用 !important 压住内联 opacity/scale, 让触发器常驻, 菜单变成从它正下方展开的下拉;
+   展开态额外加深玻璃底, 补偿禁用的 "按钮形变" 反馈 */
+.panel .panel-menu .buttons .lg-button[aria-expanded="true"] {
+  opacity: 1 !important;
+  scale: none !important;
+  --lg-glass-fill: rgb(255 255 255 / 0.66);
+  color: var(--lg-text);
+}
+
+/* GlassMenu 触发器的 icon 实际上是 "<图标> 文案 <箭头>" 整组, 不能被库锁成 14px 方格 */
+.panel .panel-menu .panel-menu-glass .lg-button__icon {
+  width: auto;
+  height: auto;
+}
+
+/* New / Full screen 是标准 GlassButton: 图标按 14px 收敛, 文案在 .lg-button__label 里 */
+.panel .panel-menu .panel-menu-action .lg-button__icon {
+  width: 14px;
+  height: 14px;
+}
+
+.panel .panel-menu .panel-menu-action .lg-button__label {
+  gap: 0;
+}
+
+.panel .panel-menu .panel-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* 库默认 top: 0 (菜单从触发器顶面长出), 在顶栏会盖住按钮本身;
+   三个下拉统一 align 跟随面板方位 (左面板 start / 右面板 end), 落在按钮正下方 6px;
+   surface 的 z-index 只在 .panel-menu 层叠上下文内生效, 跨工具栏的抬升见下方 :has 规则 */
+.panel .panel-menu .panel-menu-glass .lg-menu-surface {
+  top: calc(100% + 6px);
+  z-index: 50;
+}
+
+/* 库的菜单没有 separator 类型: 用一颗 disabled 项承载分隔线, 再去掉按钮外观 */
+.panel .panel-menu .panel-menu-glass .lg-menu__item {
+  min-height: 32px;
+  font-size: 13px;
+}
+
+.panel .panel-menu .panel-menu-glass .lg-menu__item:has(.ctx-menu-sep) {
+  min-height: 9px;
+  padding: 0 6px;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.panel .panel-menu .panel-menu-glass .ctx-menu-sep {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--lg-hairline);
+}
+
+body.jse-theme-dark .panel .panel-menu .buttons .lg-button {
+  --lg-glass-fill: rgb(255 255 255 / 0.1);
+  color: var(--lg-text-2);
+}
+
+body.jse-theme-dark .panel .panel-menu .buttons .lg-button[aria-expanded="true"] {
+  --lg-glass-fill: rgb(255 255 255 / 0.16);
+  color: var(--lg-text);
+}
+
+/* 浮层是 absolute (不是 portal): 展开时彻底放开面板的裁剪并将整块面板抬到 center 之上,
+   否则下拉会被面板 overflow 切掉, 或落在中间操作条 / 对侧面板的复制按钮底下被遮挡 */
+.app .body .contents-panel .left-panel:has(.panel-menu-glass .lg-menu-surface),
+.app .body .contents-panel .right-panel:has(.panel-menu-glass .lg-menu-surface) {
+  overflow: visible;
+  z-index: 2;
+}
+
+/* 菜单展开期间把整块 .panel-menu 抬到 .editor-toolbar (z-index 60) 之上:
+   .lg-menu-surface 的 z-index 被困在 .panel-menu 的层叠上下文里 (自身 z-index 1),
+   而工具栏的 z-index 60 经 .panel-contents (z-index auto) 直接参与 .panel 的层叠比较,
+   不抬升的话左右面板的下拉都会被自家工具栏盖住, 鼠标事件也被工具栏截走 */
+.panel .panel-menu:has(.panel-menu-glass .lg-menu-surface) {
+  z-index: 70;
+}
+
+.panel .panel-menu .menu-button.name {
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--lg-text);
+  padding: 7px 10px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.panel .panel-menu .menu-button.name .icon {
+  margin-left: 0.5em;
+  opacity: 0.6;
+}
+
+/* schema 盾牌入口*/
+.panel .panel-menu .menu-button.schema {
+  padding: 7px 6px;
+  color: var(--lg-text-3);
+}
+
+/* Schema 解析失败: 图标进入 error 态, tooltip 给出失败原因 */
+.panel .panel-menu .menu-button.schema.error {
+  color: var(--lg-danger);
+}
+
+.panel .panel-menu .unsaved-changes {
+  align-items: center;
+  color: var(--lg-text-3);
+  white-space: nowrap;
+  padding-left: 8px;
+  font-size: 12px;
+  /* 用 display 切换而非 visibility: hidden: 后者隐藏时仍占 ~103px,
+     在中等宽度面板上过度占用文档名区域, 导致 "New document N" 过早被截断 */
+  display: none;
+}
+
+.panel .panel-menu .unsaved-changes.visible {
+  display: inline-flex;
+}
+
+.panel .panel-menu .unsaved-changes span {
+  display: inline-block;
+  align-self: center;
+}
+
+.panel .panel-menu .unsaved-changes .save-now {
+  border: none;
+  background: transparent;
+  color: inherit;
+  padding: 7px 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.panel .panel-menu .unsaved-changes.menu-button:hover,
+.panel .panel-menu .unsaved-changes.menu-button:focus,
+.panel .panel-menu .unsaved-changes button.save-now:hover,
+.panel .panel-menu .unsaved-changes button.save-now:focus {
+  color: var(--lg-accent);
+  text-decoration: underline;
+}
+
+.panel .space {
+  /* 不抢占剩余宽度: document-details 已 flex:1 独占名字区, 这里再 flex:1 会把
+     文档名区域对半分, 使 "New document N" 被过早截断; 按钮组靠 .document-details
+     的 flex:1 撑开推到右侧, 本占位仅需存在但不分宽度 */
+  flex: 0 0 0;
+  min-width: 0;
+}
+
+.panel .buttons {
+  /* 按钮组保持自身宽度, 窄面板时由文档名截断吸收压缩量, 按钮不被挤出面板 */
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+/* 文档重命名输入 */
+.panel .panel-menu .panel-name-input {
+  align-self: center;
+  width: 140px;
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  padding: 5px 8px;
+  font: inherit;
+  color: var(--lg-text);
+  background: var(--lg-field);
+  outline: none;
+}
+
+.panel .panel-menu .panel-name-input:focus {
+  border-color: rgb(10 132 255 / 0.55);
+  box-shadow: 0 0 0 3px var(--lg-accent-soft);
+}
+
+/* ---------- 面板内容与全屏 (.panel-contents) ---------- */
+.panel .panel-contents {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-radius: 0 0 var(--lg-radius-xl) var(--lg-radius-xl);
+  overflow: hidden;
+}
+
+.panel .panel-contents.full-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  border-radius: 0;
+  background: var(--lg-surface-solid);
+}
+
+/* 全屏时其余面板与中间列不参与布局: 不依赖层叠顺序, 保证全屏层独占整个视口
+   (优先级必须压过 .app .body .contents-panel .center-panel 的 display: flex, :has 参与计数) */
+.app .body .contents-panel:has(.full-screen) .left-panel:not(:has(.full-screen)),
+.app .body .contents-panel:has(.full-screen) .right-panel:not(:has(.full-screen)),
+.app .body .contents-panel:has(.full-screen) .center-panel {
+  display: none;
+}
+
+/* 玻璃面板的两处包含块/层叠约束, 全屏期间都要解除, 固定层才能脱离面板并盖过顶栏:
+   1. .lg-glass 的 backdrop-filter 会为 position: fixed 的后代创建包含块 (全屏层被锁在面板尺寸里);
+   2. .lg-glass > * 给 .panel 设了 z-index: 1 (层叠上下文), 全屏层的 z-index 300 被困在其中,
+      与顶栏 (z-index 6) 比较时整体落下风, 顶栏就会盖住全屏层顶部的退出按钮 */
+.app .body .contents-panel .left-panel:has(.panel-contents.full-screen),
+.app .body .contents-panel .right-panel:has(.panel-contents.full-screen) {
+  margin: 0;
+  box-shadow: none;
+  overflow: visible;
+  backdrop-filter: none;
+  --lg-glass-fill: transparent;
+  --lg-glass-shadow: none;
+}
+
+.app .body .contents-panel .left-panel:has(.panel-contents.full-screen) > .panel,
+.app .body .contents-panel .right-panel:has(.panel-contents.full-screen) > .panel {
+  z-index: auto;
+}
+
+.panel .panel-contents .jse-host {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------- 编辑器工具栏 (取代 jse 原生菜单条) ---------- */
+/* 原生菜单条只隐藏不改结构: 工具栏的 搜索 / 撤销 / 格式化 等动作按类名点击这些按钮委托执行 */
+.panel .jse-main .jse-menu {
+  display: none;
+}
+
+.editor-toolbar {
+  position: relative;
+  /* 工具栏那颗库 GlassMenu 的菜单浮层是 absolute, 需要盖在后面的编辑器之上 */
+  z-index: 60;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--lg-hairline);
+  color: var(--lg-text-2);
+}
+
+/* 全屏时工具栏贴到视口顶边, 补一点内边距避免分段控件顶着边缘 */
+.panel-contents.full-screen .editor-toolbar {
+  height: 46px;
+  padding: 0 14px;
+}
+
+.editor-toolbar-space {
+  flex: 1;
+}
+
+/* 组内紧排, 组间以细竖线区隔 */
+.toolbar-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.toolbar-separator {
+  flex: none;
+  width: 1px;
+  height: 16px;
+  margin: 0 7px;
+  background: var(--lg-hairline);
+}
+
+/* 模式切换: 库的 GlassSegmented (iOS 26 分段控件, 整轨液态玻璃 + 选中透镜可拖),
+   尺寸用 sm (28px 项高 / 13px 字), 与工具栏 30px 按钮同一视觉线; 透镜拖动时向上膨胀不裁剪 (工具栏无 overflow) */
+/* 库的 sm 档每段最小 64px + 16px 内边距, 三段要占 198px; 标签只有 text/tree/table, 收紧到 56px / 13px
+   才能在 1024 宽的双栏布局里与右侧图标按钮一起放下 (否则末位按钮被面板边缘裁掉) */
+.editor-toolbar .lg-track--segmented {
+  --lg-item-w: 56px;
+}
+
+.editor-toolbar .lg-track--segmented .lg-track__item {
+  padding: 0 13px;
+}
+
+/* 窄视口下双栏面板各约 450px: text 模式 13 个按钮加分段控件会溢出末位,
+   这里整体收紧间距 (宽屏保持原间距不变), 保证 1024 宽仍能一排放完;
+   选择器带 .editor-toolbar 前缀: 基础按钮 / 分隔线规则在本段之后定义, 同权重会被源码顺序压掉 */
+@media (max-width: 1180px) {
+  .editor-toolbar {
+    gap: 4px;
+    padding: 0 8px;
+  }
+
+  .editor-toolbar .toolbar-separator {
+    margin: 0 3px;
+  }
+
+  .editor-toolbar .toolbar-button {
+    min-width: 20px;
+    padding: 0 1px;
+  }
+
+  .editor-toolbar .lg-track--segmented {
+    --lg-item-w: 52px;
+  }
+
+  .editor-toolbar .lg-track--segmented .lg-track__item {
+    padding: 0 10px;
+  }
+}
+
+/* 工具栏图标按钮: 直接落在工具栏上 (无胶囊底 / 无内边距), 只在悬停与展开时变色 */
+.toolbar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 22px;
+  height: 30px;
+  padding: 0 2px;
+  border: none;
+  margin: 0;
+  background: none;
+  color: var(--lg-text-3);
+  font-family: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    opacity 140ms ease;
+}
+
+.toolbar-button .icon {
+  width: 15px;
+  height: 15px;
+  vertical-align: 0;
+}
+
+.toolbar-button:hover,
+.toolbar-button[aria-expanded="true"] {
+  color: var(--lg-text);
+}
+
+.toolbar-button:focus-visible {
+  outline: 2px solid var(--lg-accent-soft);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.toolbar-button.with-label {
+  gap: 6px;
+  color: var(--lg-accent);
+  font-size: 12px;
+}
+
+.toolbar-button.with-label:hover {
+  color: var(--lg-accent-strong);
+}
+
+/* 状态栏 (Line: n Column: n): 面板底边为 22px 圆角, 贴边时文字会被圆角切掉,
+   因此内缩成一条玻璃胶囊, 与卡片留出呼吸空间 (与其他玻璃件同一套填充 / 发丝边) */
+.panel .jse-main .jse-status-bar {
+  margin: 0 10px 8px;
+  height: 24px;
+  padding: 0 10px;
+  border-top: none;
+  border-radius: var(--lg-radius-sm);
+  background: rgb(255 255 255 / 0.3);
+  backdrop-filter: blur(14px) saturate(1.6);
+  box-shadow: inset 0 0 0 0.5px var(--lg-edge);
+  color: var(--lg-text-2);
+}
+
+body.jse-theme-dark .panel .jse-main .jse-status-bar {
+  background: rgb(255 255 255 / 0.06);
+}
+
+/* ---------- 搜索: 树/表格为 jse 浮层, 文本模式为 CodeMirror 内嵌面板, 两者统一成玻璃材质 ---------- */
+/* 覆盖到 .modal: JSON Schema / Configuration / Transform 弹框里的内嵌编辑器
+   也是同一个 JsonEditor 组件, 搜索框需在弹框内保持玻璃材质.
+   底色用半透明 --lg-glass, 让背后的氛围光斑透出来, 保持液态玻璃质感;
+   输入框聚焦不用强调蓝光晕 (蓝色与全站中性玻璃违和) */
+.panel .jse-host .jse-search-box,
+.modal .jse-host .jse-search-box {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-glass);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+}
+
+.panel .jse-host .jse-search-box input,
+.modal .jse-host .jse-search-box input {
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-field);
+  color: var(--lg-text);
+  font-family: inherit;
+}
+
+.panel .jse-host .jse-search-box input:focus-visible,
+.modal .jse-host .jse-search-box input:focus-visible {
+  outline: none;
+  border-color: var(--lg-hairline);
+  box-shadow:
+    0 0 0 3px var(--lg-hover),
+    inset 0 1px 2px rgb(15 23 42 / 0.06);
+}
+
+.panel .jse-host .jse-search-box button,
+.modal .jse-host .jse-search-box button {
+  border-radius: var(--lg-radius-sm);
+  color: var(--lg-text-2);
+}
+
+.panel .jse-host .jse-search-box button:hover,
+.modal .jse-host .jse-search-box button:hover {
+  background: var(--lg-hover);
+  color: var(--lg-text);
+}
+
+/* 搜索框顶部的 "展开替换" 横条 jse 默认是 #e0e0e0 实色块, 单独换成玻璃.
+   jse 的 scoped 规则是 0,4,0 且运行时注入在 app.css 之后, 这里带 button 元素选择器压到 0,4,1 */
+.panel .jse-host .jse-search-box button.jse-replace-toggle,
+.modal .jse-host .jse-search-box button.jse-replace-toggle {
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-glass-quiet);
+  box-shadow: var(--lg-inset);
+  backdrop-filter: blur(12px) saturate(var(--lg-saturate));
+  color: var(--lg-text-2);
+}
+
+/* 行内 "打开上下文菜单" 按钮 (行右侧三点) 与插入线右端的 "插入 / 粘贴" 按钮是同一个 svelte 组件
+   (jse-context-menu-pointer), 交互: 行内那颗只在点击 key / value 选中后才出现,
+   插入线那颗只在悬停或选中插入位时出现; 这里仅替换外观: 材质对齐库 GlassButton (glass 变体),
+   中性半透明玻璃 + 发丝边 + 内高光, 不带任何强调色 */
+/* 选择器比 jse 自带的 .jse-selected 实色规则更具体一档 (button 元素选择器), 保证玻璃底生效 */
+.panel .jse-main button.jse-context-menu-pointer,
+.modal .jse-main button.jse-context-menu-pointer {
+  /* 尺寸变量与原生几何对齐: jse 按 -0.5 * size 定位, 显式给定保证 18px 圆钮正好压在选中角上 */
+  --jse-context-menu-pointer-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid var(--lg-border);
+  border-radius: 50%;
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.28));
+  box-shadow: var(--lg-shadow-1), var(--lg-inset);
+  backdrop-filter: blur(14px) saturate(var(--lg-saturate));
+  color: var(--lg-text-2);
+  opacity: 1;
+  pointer-events: auto;
+  transition:
+    opacity 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.panel .jse-main button.jse-context-menu-pointer:hover,
+.modal .jse-main button.jse-context-menu-pointer:hover {
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.82), rgb(255 255 255 / 0.44));
+  color: var(--lg-text);
+}
+
+body.jse-theme-dark .panel .jse-main button.jse-context-menu-pointer,
+body.jse-theme-dark .modal .jse-main button.jse-context-menu-pointer {
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0.06));
+  color: var(--lg-text-2);
+}
+
+body.jse-theme-dark .panel .jse-main button.jse-context-menu-pointer:hover,
+body.jse-theme-dark .modal .jse-main button.jse-context-menu-pointer:hover {
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.3), rgb(255 255 255 / 0.12));
+  color: var(--lg-text);
+}
+
+/* 原生 FontAwesome 图标一个是 4px 宽的细三点, 一个是实心三角, 统一换成 lucide 横向 Ellipsis */
+.panel .jse-main .jse-context-menu-pointer .fa-icon,
+.modal .jse-main .jse-context-menu-pointer .fa-icon {
+  display: none;
+}
+
+.panel .jse-main .jse-context-menu-pointer::after,
+.modal .jse-main .jse-context-menu-pointer::after {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: var(--lg-ellipsis-icon) center / contain no-repeat;
+  mask: var(--lg-ellipsis-icon) center / contain no-repeat;
+}
+
+/* ---------- 行内三点 / 上下文菜单的玻璃浮层 ---------- */
+/* 浮层 portal 到 body: 面板内容区与编辑器 scroll 容器都会裁切, 挂在原地会被切掉.
+   宿主是一个 0 尺寸的固定定位锚点, 库的菜单从锚点里的玻璃按钮长出来 */
+.ctx-menu-host {
+  position: fixed;
+  z-index: 1300;
+  width: 0;
+  height: 0;
+  font-family: var(--main-font-family);
+}
+
+/* 行内三点的出现时机 (点击 key / value 选中后才出现),
+   悬浮只出现插入线, 见 .jse-insert-area 一节 */
+
+/* 右键 / Ctrl+Q / 行内按钮打开的浮层: 库触发器只是 "按钮长成菜单" 的动画起点, 本身不可见 */
+.ctx-menu-host .lg-menu-anchor > .lg-button {
+  --lg-h: 20px;
+  visibility: hidden;
+}
+
+.ctx-menu-host .lg-button__icon {
+  width: 12px;
+  height: 12px;
+  color: var(--lg-text-2);
+}
+
+.ctx-menu-host .lg-button:hover .lg-button__icon {
+  color: var(--lg-text);
+}
+
+/* 工具栏 "打开所选内容的上下文菜单" 按钮: 直接用库的 GlassMenu (触发器 + 菜单一体),
+   压到工具栏图标按钮的尺寸, 保留中性玻璃底, 不着蓝色 */
+.toolbar-context-menu-host {
+  display: inline-flex;
+  align-items: center;
+}
+
+.toolbar-context-menu.lg-menu-anchor {
+  display: inline-flex;
+}
+
+/* 库默认让菜单从触发器顶面长出 (top: 0), 在顶栏会盖住整排工具栏按钮;
+   下移到按钮底部再展开, 仍是同一颗按钮的形变动画, 只是不压住操作区 */
+.toolbar-context-menu .lg-menu-surface {
+  top: calc(100% + 10px);
+}
+
+.toolbar-context-menu > .lg-button {
+  --lg-h: 30px;
+  --lg-glass-fill: rgb(255 255 255 / 0.42);
+  width: 26px;
+  min-width: 26px;
+  height: 30px;
+  padding: 0;
+  border-radius: 9px;
+  color: var(--lg-text-3);
+  font-size: 12.5px;
+}
+
+.toolbar-context-menu > .lg-button:hover,
+.toolbar-context-menu > .lg-button[aria-expanded="true"] {
+  color: var(--lg-text);
+}
+
+.toolbar-context-menu .lg-button__icon {
+  width: 15px;
+  height: 15px;
+}
+
+body.jse-theme-dark .toolbar-context-menu > .lg-button {
+  --lg-glass-fill: rgb(255 255 255 / 0.1);
+  color: var(--lg-text-2);
+}
+
+/* 库的菜单浮层是 absolute (不是 portal), 展开时临时放开面板的横向裁剪与内容区 overflow,
+   否则 20 项的上下文菜单会被 .panel-contents 的 overflow: hidden 切掉下半截 */
+.panel .panel-contents:has(.toolbar-context-menu .lg-menu-surface) {
+  overflow: visible;
+}
+
+.app .body .contents-panel .left-panel:has(.toolbar-context-menu .lg-menu-surface),
+.app .body .contents-panel .right-panel:has(.toolbar-context-menu .lg-menu-surface) {
+  overflow-x: visible;
+}
+
+/* 菜单项: 库默认按 iOS 列表 44px 高, 上下文菜单有 20 项, 收到 30px 才装得下 */
+.ctx-menu-surface .lg-menu__content {
+  padding: 5px;
+}
+
+.ctx-menu-surface .lg-menu__item {
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 10px;
+  gap: 9px;
+  font-size: 13px;
+}
+
+.ctx-menu-surface .lg-menu__icon {
+  display: inline-flex;
+  flex: none;
+  width: 13px;
+  color: var(--lg-text-2);
+}
+
+.ctx-menu-surface .lg-menu__label {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 分隔线与分组标题借用菜单项渲染 (库的菜单没有这两类元素), 用 :has 还原成非交互行 */
+.ctx-menu-surface .lg-menu__item:has(.ctx-menu-sep) {
+  min-height: 9px;
+  padding: 0 4px;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.ctx-menu-surface .ctx-menu-sep {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--lg-hairline);
+}
+
+.ctx-menu-surface .lg-menu__item:has(.ctx-menu-header) {
+  min-height: 22px;
+  padding: 2px 10px 0;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.ctx-menu-surface .ctx-menu-header {
+  color: var(--lg-text-3);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* 插入线: jse 只在 "悬停" 或 "插入点被选中" 时才挂 .jse-insert-area (高度 0, 靠 1px outline 画线),
+   因此线必须和按钮同步出现与消失. 依赖自带 outline 时, 点击选中后 hover 状态消失,
+   outline 变透明, 仅剩按钮而无线条指示. 这里自绘一条中性玻璃横条
+   (与工具栏图标 / 分段控件 / 状态栏同一套灰白玻璃, 不用强调蓝) */
+.panel .jse-main .jse-insert-area,
+.panel .jse-main .jse-insert-area.jse-hovered,
+.panel .jse-main .jse-insert-area.jse-selected,
+.modal .jse-main .jse-insert-area,
+.modal .jse-main .jse-insert-area.jse-hovered,
+.modal .jse-main .jse-insert-area.jse-selected {
+  outline: none;
+}
+
+.panel .jse-main .jse-insert-area::before,
+.modal .jse-main .jse-insert-area::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  height: 4px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-pill);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.92) 0%, rgb(148 163 184 / 0.38) 100%);
+  box-shadow:
+    0 1px 4px rgb(15 23 42 / 0.18),
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    inset 0 -1px 0 rgb(15 23 42 / 0.08);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  pointer-events: none;
+}
+
+body.jse-theme-dark .panel .jse-main .jse-insert-area::before,
+body.jse-theme-dark .modal .jse-main .jse-insert-area::before {
+  border-color: rgb(255 255 255 / 0.18);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.3) 0%, rgb(255 255 255 / 0.08) 100%);
+  box-shadow:
+    0 1px 4px rgb(0 0 0 / 0.4),
+    inset 0 1px 0 rgb(255 255 255 / 0.22);
+}
+
+/* 插入线按钮与横线同时出现 (area 存在即显示, jse 只在 hover / selected 时挂这个节点) */
+
+/* 导航条下拉 (点路径分段弹出): jse 自渲染, 与 GlassMenu / 二级菜单同一套玻璃材质 */
+.panel .jse-host .jse-navigation-bar-dropdown,
+.modal .jse-host .jse-navigation-bar-dropdown {
+  min-width: 120px;
+  padding: 4px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-glass-strong);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+.panel .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item,
+.modal .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item {
+  border-radius: var(--lg-radius-sm);
+  padding: 6px 12px;
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+  font-size: 12.5px;
+}
+
+.panel .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item:hover,
+.panel .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item:focus,
+.modal .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item:hover,
+.modal .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item:focus {
+  background: var(--lg-hover);
+  color: var(--lg-text);
+  outline: none;
+}
+
+.panel .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item.jse-selected,
+.modal .jse-host .jse-navigation-bar-dropdown button.jse-navigation-bar-dropdown-item.jse-selected {
+  background: var(--lg-accent-soft);
+  color: var(--lg-accent);
+}
+
+/* ---------- 上下文菜单 (tree / table 右键) ---------- */
+/* 这块 DOM 由编辑器自己渲染, 无法套 React 的玻璃组件, 因此沿用同一套材质令牌:
+   半透明底 + backdrop-filter + 发丝边 + 多层投影, 与 GlassMenu 在观感上对齐 */
+:is(.panel .panel-contents, .modal) .jse-contextmenu[role="menu"] {
+  padding: 5px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-lg);
+  background: var(--lg-glass-strong);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-row {
+  gap: 2px;
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-context-menu-button {
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--lg-radius-sm);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  font-size: 12.5px;
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-context-menu-button:hover:not(:disabled),
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-context-menu-button:focus,
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-context-menu-button:focus-visible,
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-open-dropdown:hover {
+  background: var(--lg-accent-soft);
+  color: var(--lg-text);
+}
+
+/* 子菜单展开按钮 (行尾小箭头): 与菜单项同一套悬停语义, 不要 jse 的方块底 */
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-open-dropdown {
+  border-radius: var(--lg-radius-sm);
+  background: transparent;
+  color: var(--lg-text-3);
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-open-dropdown:hover {
+  background: var(--lg-hover);
+  color: var(--lg-text);
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-context-menu-button:disabled {
+  color: var(--lg-text-3);
+  opacity: 0.55;
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-separator {
+  margin: 4px 6px;
+  background: var(--lg-hairline);
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-label {
+  padding: 0 8px;
+  color: var(--lg-text-3);
+  font-size: 11px;
+}
+
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-column + .jse-column {
+  border-left: 1px solid var(--lg-hairline);
+}
+
+/* 二级菜单 (Convert to / Insert 等): 与主菜单同材质, 圆角小一档 */
+:is(.panel .panel-contents, .modal) .jse-contextmenu .jse-dropdown-items ul {
+  min-width: 168px;
+  padding: 4px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-glass-strong);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  list-style: none;
+}
+
+/* CodeMirror 的搜索条是内嵌面板 (不是浮层): 玻璃铺在 .cm-panels 上, 面板本体透明,
+   同样覆盖弹框里的内嵌编辑器 */
+.panel .cm-panels.cm-panels-top,
+.modal .cm-panels.cm-panels-top {
+  border-bottom: 1px solid var(--lg-hairline);
+  background: var(--lg-glass);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  box-shadow: var(--lg-inset);
+}
+
+.panel .cm-panel.cm-search,
+.modal .cm-panel.cm-search {
+  padding: 8px 10px;
+  background: transparent;
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+  font-size: 12.5px;
+}
+
+.panel .cm-panel.cm-search .cm-textfield,
+.modal .cm-panel.cm-search .cm-textfield {
+  padding: 3px 8px;
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-field);
+  color: var(--lg-text);
+  font-family: inherit;
+  font-size: 12.5px;
+}
+
+.panel .cm-panel.cm-search .cm-textfield:focus-visible,
+.modal .cm-panel.cm-search .cm-textfield:focus-visible {
+  outline: none;
+  border-color: var(--lg-hairline);
+  box-shadow: 0 0 0 3px var(--lg-hover);
+}
+
+.panel .cm-panel.cm-search .cm-button,
+.modal .cm-panel.cm-search .cm-button {
+  padding: 3px 10px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-glass-quiet);
+  color: var(--lg-text);
+  font-family: inherit;
+  font-size: 12.5px;
+  box-shadow: var(--lg-inset);
+}
+
+.panel .cm-panel.cm-search .cm-button:hover,
+.modal .cm-panel.cm-search .cm-button:hover {
+  background: var(--lg-hover);
+}
+
+.panel .cm-panel.cm-search .cm-button:active,
+.modal .cm-panel.cm-search .cm-button:active {
+  background: var(--lg-press);
+}
+
+.panel .cm-panel.cm-search label,
+.modal .cm-panel.cm-search label {
+  color: var(--lg-text-2);
+}
+
+.panel .cm-panel.cm-search input[type="checkbox"],
+.modal .cm-panel.cm-search input[type="checkbox"] {
+  accent-color: var(--lg-text-3);
+}
+
+.panel .cm-panel.cm-search [name="close"],
+.modal .cm-panel.cm-search [name="close"] {
+  border: none;
+  background: transparent;
+  color: var(--lg-text-2);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.panel .cm-panel.cm-search [name="close"]:hover,
+.modal .cm-panel.cm-search [name="close"]:hover {
+  background: var(--lg-hover);
+  color: var(--lg-text);
+}
+
+/* 编辑器内部菜单条: 不用主题实色铺满, 跟随卡片玻璃 */
+.panel .jse-main .jse-menu,
+.panel .jse-main .jse-header,
+.modal .jse-main .jse-menu,
+.modal .jse-main .jse-header,
+.modal .jse-menu,
+.modal .jse-header {
+  background: transparent;
+  color: var(--lg-text-2);
+  border-bottom: 1px solid var(--lg-hairline);
+}
+
+.panel .jse-main .jse-menu .jse-button:hover,
+.panel .jse-main .jse-menu .jse-button:focus,
+.modal .jse-main .jse-menu .jse-button:hover,
+.modal .jse-main .jse-menu .jse-button:focus {
+  background: var(--lg-hover);
+  border-radius: var(--lg-radius-sm);
+}
+
+/* 弹框内预览编辑器: 原生菜单条整根隐藏, 由 ModalEditorBar 顶栏接管 (分段控件 + 展开 / 格式化 / 搜索委托),
+   这样模式切换真正嵌在编辑器内部, 而不是浮在编辑器上方 */
+.modal .jse-main .jse-menu {
+  display: none;
+}
+
+/* 空文档空态: jse 默认用主题实色铺满整行按钮, 这里改成玻璃胶囊 + 强调色文本, 只替换材质 */
+.panel .jse-main .jse-welcome .jse-welcome-title,
+.modal .jse-main .jse-welcome .jse-welcome-title {
+  color: var(--lg-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.panel .jse-main .jse-welcome .jse-contents,
+.modal .jse-main .jse-welcome .jse-contents {
+  color: var(--lg-text-2);
+}
+
+/* ---------- jse 原生按钮: 实现 GlassButton (sm) 的几何与材质 ----------
+   jse 自己生成的按钮无法接入 React 组件, 因此按库 .lg-button--sm 的实测值对齐:
+   --lg-h: 36px / border-radius: calc(var(--lg-h) / 2) = 18px 胶囊 / 14px 500 字重 /
+   0.42 半透明白底 + blur(20px) + 发丝边 + 顶部内高光 + 中性文字.
+   覆盖空文档、table 欢迎区、所有 jse 弹框与消息条按钮, 避免 "两种按钮质感" */
+:is(
+  .panel .jse-main .jse-welcome .jse-contents button,
+  .modal .jse-main .jse-welcome .jse-contents button,
+  .panel .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+  .modal .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+  body dialog.jse-modal .jse-modal-contents .jse-actions button,
+  body dialog.jse-modal .jse-modal-wrapper .jse-actions button,
+  body .jse-message .jse-actions button.jse-action,
+  body .jse-color-picker-popup .picker_done button,
+  body .jse-navigation-bar-path-editor button
+) {
+  /* 库 .lg-button 是 inline-flex + 内容宽度: jse 的 flex 列默认把按钮拉伸成整行,
+     这里收回到内容宽度 (各处的 align-self 见下方布局规则) */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: none;
+  width: auto;
+  min-width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  padding: 0 18px;
+  /* 灰发丝边而非白高光边: 这些按钮铺在近白的面板 / 玻璃卡片上, 白边会混入背景,
+     轮廓仅剩一行文字; 库 GlassButton 靠 .lg-glass::before 的 0.5px inset 描边起同样作用 */
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-pill);
+  /* 玻璃底与库 GlassButton 的 --lg-glass-fill 同值 (0.42 白) */
+  background: var(--lg-glass-quiet);
+  box-shadow:
+    var(--lg-shadow-1),
+    var(--lg-inset),
+    inset 0 1px 0 rgb(255 255 255 / 0.75);
+  /* 写死 20px: 面板本身是 .lg-glass, 库在它上面把 --lg-blur 降到了 6px,
+     继承会使这些按钮的模糊弱于库 GlassButton (blur 20px) */
+  backdrop-filter: blur(20px) saturate(var(--lg-saturate)) brightness(1.04);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+:is(
+    .panel .jse-main .jse-welcome .jse-contents button,
+    .modal .jse-main .jse-welcome .jse-contents button,
+    .panel .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+    .modal .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+    body dialog.jse-modal .jse-modal-contents .jse-actions button,
+    body dialog.jse-modal .jse-modal-wrapper .jse-actions button,
+    body .jse-message .jse-actions button.jse-action,
+    body .jse-color-picker-popup .picker_done button,
+    body .jse-navigation-bar-path-editor button
+  ):hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.66);
+  color: var(--lg-text);
+}
+
+:is(
+    .panel .jse-main .jse-welcome .jse-contents button,
+    .modal .jse-main .jse-welcome .jse-contents button,
+    .panel .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+    .modal .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+    body dialog.jse-modal .jse-modal-contents .jse-actions button,
+    body dialog.jse-modal .jse-modal-wrapper .jse-actions button,
+    body .jse-message .jse-actions button.jse-action,
+    body .jse-color-picker-popup .picker_done button,
+    body .jse-navigation-bar-path-editor button
+  ):active:not(:disabled) {
+  background: var(--lg-press);
+  transform: scale(0.97);
+}
+
+/* 布局: .jse-welcome 的 .jse-contents 是 flex 列, 默认把两个 Create 按钮拉伸成 300px 整行;
+   库按钮是内容宽度的胶囊, 因此收回到中心对齐. table 欢迎区的 "Switch to tree mode" 同理
+   (它是 .jse-nested-arrays 的直接子元素), 改为左对齐的内容宽度胶囊 */
+.panel .jse-main .jse-welcome .jse-contents > button,
+.modal .jse-main .jse-welcome .jse-contents > button {
+  align-self: center;
+}
+
+.panel .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays > button.jse-nested-array-action,
+.modal .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays > button.jse-nested-array-action {
+  align-self: flex-start;
+}
+
+body.jse-theme-dark
+  :is(
+    .panel .jse-main .jse-welcome .jse-contents button,
+    .modal .jse-main .jse-welcome .jse-contents button,
+    .panel .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+    .modal .jse-host .jse-main .jse-table-mode-welcome button.jse-nested-array-action,
+    body dialog.jse-modal .jse-modal-contents .jse-actions button,
+    body dialog.jse-modal .jse-modal-wrapper .jse-actions button,
+    body .jse-message .jse-actions button.jse-action,
+    body .jse-color-picker-popup .picker_done button,
+    body .jse-navigation-bar-path-editor button
+  ) {
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.1);
+  box-shadow:
+    var(--lg-shadow-1),
+    var(--lg-inset),
+    inset 0 1px 0 rgb(255 255 255 / 0.18);
+  color: var(--lg-text);
+}
+
+/* ---------- jse 弹框内嵌编辑器 / 表格: 全量扫描出的实色残留 ---------- */
+/* jse 的 scoped 规则与上面的共享按钮规则同为 (0,5,1), 但它运行时注入 <style> 更靠后,
+   Apply / Close 这类 .jse-primary 会抢回实色蓝底; 这里再抬一档压回去 */
+body
+  dialog.jse-modal[open]
+  :is(.jse-modal-wrapper, .jse-modal-contents)
+  .jse-actions
+  :is(button.jse-primary, button.jse-secondary) {
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-pill);
+  background: var(--lg-glass-quiet);
+  box-shadow:
+    var(--lg-shadow-1),
+    var(--lg-inset),
+    inset 0 1px 0 rgb(255 255 255 / 0.75);
+  backdrop-filter: blur(20px) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+}
+
+body
+  dialog.jse-modal[open]
+  :is(.jse-modal-wrapper, .jse-modal-contents)
+  .jse-actions
+  :is(button.jse-primary, button.jse-secondary):hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.66);
+  color: var(--lg-text);
+}
+
+/* "Edit nested content" 内嵌编辑器的原生菜单条: 默认 #707070 实色 + 实白分段选中 */
+body dialog.jse-modal[open] .jse-menu {
+  background: transparent;
+  border-bottom: 1px solid var(--lg-hairline);
+  color: var(--lg-text-2);
+}
+
+body dialog.jse-modal[open] .jse-menu .jse-button:hover,
+body dialog.jse-modal[open] .jse-menu .jse-button:focus {
+  background: var(--lg-hover);
+  border-radius: var(--lg-radius-sm);
+}
+
+body dialog.jse-modal[open] .jse-menu .jse-button.jse-group-button.jse-selected {
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-glass-quiet);
+  box-shadow: var(--lg-inset), var(--lg-shadow-1);
+  backdrop-filter: blur(20px) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+}
+
+/* 表格表头: 默认 #f5f5f5 实色 + 深灰描边 */
+body .panel .jse-host .jse-main .jse-table-mode th.jse-table-cell-header,
+body .modal .jse-host .jse-main .jse-table-mode th.jse-table-cell-header,
+body dialog.jse-modal[open] .jse-table-mode th.jse-table-cell-header {
+  border-color: var(--lg-hairline);
+  background: var(--lg-glass-quiet);
+  backdrop-filter: blur(20px) saturate(var(--lg-saturate));
+  color: var(--lg-text-2);
+}
+
+body.jse-theme-dark dialog.jse-modal[open] .jse-menu .jse-button.jse-group-button.jse-selected,
+body.jse-theme-dark .panel .jse-host .jse-main .jse-table-mode th.jse-table-cell-header {
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.08);
+  color: var(--lg-text);
+}
+
+/* ---------- table 模式欢迎面板 (Object with nested arrays) ---------- */
+/* jse 自带样式里 Edit / Extract / Switch to tree mode 是 --jse-theme-color 实色蓝按钮,
+   按钮改成中性玻璃胶囊; 选择器比 jse 的 svelte scoped 规则高一档, 保证覆盖生效 */
+.panel .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays,
+.modal .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays {
+  max-width: 460px;
+  padding: 22px 24px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-lg);
+  background: var(--lg-glass);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+.panel .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays-title,
+.modal .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays-title {
+  color: var(--lg-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.panel .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays-info,
+.modal .jse-host .jse-main .jse-table-mode-welcome .jse-nested-arrays-info {
+  color: var(--lg-text-3);
+  line-height: 1.55;
+}
+
+.panel .jse-host .jse-main .jse-table-mode-welcome .jse-nested-property-path,
+.modal .jse-host .jse-main .jse-table-mode-welcome .jse-nested-property-path {
+  color: var(--lg-text-2);
+}
+
+/* Edit / Extract / Switch to tree mode 的材质已由上面的共享 GlassButton 规则统一提供,
+   这里不再单独写渐变, 避免 "同一套 UI 两种按钮质感" */
+
+/* ---------- jse 原生弹框 / 提示 / 浮层: 全量玻璃化 ----------
+   vanilla-jsoneditor 还会自己弹这些层 (不经 React Modal):
+     dialog.jse-modal        剪贴板权限 / 排序 / 修复 JSON / 内嵌编辑器 / Transform / 全屏
+     .jse-message            解析错误、多行粘贴提示等消息条
+     .jse-tooltip            text 模式悬浮提示
+     .jse-validation-errors-overview / .jse-navigation-bar-dropdown / .jse-dropdown-items
+     .jse-color-picker-popup / .svelte-select (弹框内的查询语言下拉)
+   全部按 GlassCard / GlassButton 的令牌铺半透明玻璃, 并去掉主题蓝实底与蓝色快捷键文字.
+   选择器统一带 body ... [open] 抬权重, 压过 jse 的 svelte scoped 规则 */
+body dialog.jse-modal[open] {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-lg);
+  background: rgb(255 255 255 / 0.72);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate)) brightness(1.04);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  overflow: visible;
+}
+
+body dialog.jse-modal[open]::backdrop {
+  background: rgb(15 23 42 / 0.16);
+  backdrop-filter: blur(6px);
+}
+
+body dialog.jse-modal[open] .jse-modal-inner {
+  background: transparent;
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+/* 标题栏: jse 默认是 --jse-theme-color 实色蓝, 换成玻璃横条 + 发丝边 */
+body dialog.jse-modal[open] .jse-header {
+  background: var(--lg-glass-quiet);
+  border-bottom: 1px solid var(--lg-hairline);
+  color: var(--lg-text);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+}
+
+body dialog.jse-modal[open] .jse-header .jse-title {
+  padding: 10px 14px;
+  color: var(--lg-text);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--main-font-family);
+}
+
+/* 标题栏按钮 (关闭 / 全屏): 安静的玻璃圆钮 */
+body dialog.jse-modal[open] .jse-header button {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  margin: 4px 8px;
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-glass-quiet);
+  box-shadow: var(--lg-inset), var(--lg-shadow-1);
+  color: var(--lg-text-2);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+body dialog.jse-modal[open] .jse-header button:hover {
+  background: rgb(255 255 255 / 0.66);
+  color: var(--lg-text);
+}
+
+/* dialog 打开时 jse 会聚焦关闭按钮, 浏览器默认的黑色 auto outline 会画成一个黑圈,
+   换成中性玻璃聚焦环 (键盘可达性保留) */
+body dialog.jse-modal[open] .jse-header button:focus {
+  outline: none;
+}
+
+body dialog.jse-modal[open] .jse-header button:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--lg-inset),
+    var(--lg-shadow-1),
+    0 0 0 3px var(--lg-hover);
+}
+
+body dialog.jse-modal[open] .jse-modal-contents {
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+  font-size: 13px;
+}
+
+/* Ctrl+C / Ctrl+X / Ctrl+V 键帽: 去掉 #3883fa 蓝字, 改成中性玻璃键帽 */
+body dialog.jse-modal[open] .jse-modal-contents .jse-shortcuts .jse-shortcut .jse-key {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-glass-quiet);
+  box-shadow: var(--lg-inset), var(--lg-shadow-1);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+body dialog.jse-modal[open] .jse-modal-contents .jse-shortcuts .jse-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--lg-text-2);
+}
+
+/* 弹框内的输入控件 / 代码区 / 查询框 */
+body dialog.jse-modal[open] :is(input, textarea, select, .jse-query, .jse-modal-code) {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-sm);
+  background: var(--lg-field);
+  box-shadow: var(--lg-inset);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+body dialog.jse-modal[open] :is(input, textarea, .jse-query):focus-visible {
+  outline: none;
+  border-color: var(--lg-hairline);
+  box-shadow:
+    var(--lg-inset),
+    0 0 0 3px var(--lg-hover);
+}
+
+/* svelte-select (弹框里的查询语言 / 枚举下拉) */
+body dialog.jse-modal[open] .jse-modal-inner .svelte-select,
+body dialog.jse-modal[open] .jse-modal-contents .svelte-select {
+  --background: var(--lg-field);
+  --border: 1px solid var(--lg-border);
+  --border-radius: var(--lg-radius-sm);
+  --item-is-active-bg: var(--lg-hover);
+  --list-background: rgb(255 255 255 / 0.86);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+body dialog.jse-modal[open] .svelte-select-list {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-sm);
+  background: rgb(255 255 255 / 0.86);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+}
+
+/* 消息条: 四种语义色默认整块实色铺满 (绿 / 红 / 黄 / 蓝), 改成中性玻璃 + 左侧语义细条.
+   选择器重复一次 class 抬权重: jse 用 scoped 双 class (.jse-message.svelte-xxx = 0,2,0)
+   设置 mono 字体, 单 class 的 body 覆盖压不住; 重复后 0,2,1 才能盖住 (且不依赖 .jse-main
+   结构, portal 到别处的浮层同样命中). 下缘留 8px: 消息条是内容区最后一个 flex 子项,
+   margin=0 时底边正好压在 .panel-contents 的 overflow:hidden 边界上, 圆角被切平. */
+body .jse-message.jse-message {
+  margin: 0 8px 8px;
+  border: 1px solid var(--lg-border);
+  border-left: 3px solid var(--lg-text-3);
+  border-radius: var(--lg-radius-md);
+  background: rgb(255 255 255 / 0.66);
+  box-shadow: var(--lg-shadow-1), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+body .jse-message.jse-message.jse-success,
+body .jse-message.jse-message.jse-error,
+body .jse-message.jse-message.jse-warning,
+body .jse-message.jse-message.jse-info {
+  background: rgb(255 255 255 / 0.66);
+  color: var(--lg-text);
+}
+
+body .jse-message.jse-message.jse-success {
+  border-left-color: var(--lg-success);
+}
+body .jse-message.jse-message.jse-error {
+  border-left-color: var(--lg-danger);
+}
+body .jse-message.jse-message.jse-warning {
+  border-left-color: var(--lg-warning);
+}
+body .jse-message.jse-message.jse-info {
+  border-left-color: var(--lg-text-3);
+}
+
+body .jse-message.jse-message .jse-text.jse-clickable:hover {
+  color: var(--lg-text);
+}
+
+/* text 模式悬浮提示: 默认 #656565 实色灰 */
+body .jse-tooltip {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-sm);
+  background: rgb(255 255 255 / 0.82);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  font-size: 12.5px;
+}
+
+/* 校验错误概览 / 导航栏下拉 / 上下文菜单里的二级下拉 */
+body .jse-validation-errors-overview.jse-validation-errors-overview,
+body .jse-navigation-bar-dropdown,
+body .jse-dropdown-button .jse-dropdown-items,
+body .jse-contextmenu .jse-dropdown-items {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: rgb(255 255 255 / 0.82);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+}
+
+body .jse-validation-errors-overview table tr:hover,
+body .jse-navigation-bar-dropdown button:hover,
+body .jse-dropdown-button .jse-dropdown-items button:hover,
+body .jse-contextmenu .jse-dropdown-items button:hover {
+  background: var(--lg-hover);
+}
+
+/* 颜色选择器弹层 */
+body .jse-color-picker-popup .picker_wrapper.popup,
+body .jse-color-picker-popup .picker_wrapper.popup .picker_arrow::before,
+body .jse-color-picker-popup .picker_wrapper.popup .picker_arrow::after {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: rgb(255 255 255 / 0.86);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+}
+
+body .jse-color-picker-popup :is(.picker_editor input, .picker_slider, .picker_sl, .picker_sample) {
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-sm);
+  box-shadow: var(--lg-inset);
+}
+
+/* 状态栏与导航栏: 与面板同材质, 不留实色条 */
+body .jse-status-bar {
+  border-top: 1px solid var(--lg-hairline);
+  background: var(--lg-glass-quiet);
+  color: var(--lg-text-2);
+  font-family: var(--main-font-family);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+}
+
+/* 暗色: 所有浮层换成暗玻璃 (不透明实底会把背后的氛围光斑盖死) */
+body.jse-theme-dark dialog.jse-modal[open],
+body.jse-theme-dark .jse-message.jse-message,
+body.jse-theme-dark .jse-tooltip,
+body.jse-theme-dark .jse-validation-errors-overview.jse-validation-errors-overview,
+body.jse-theme-dark .jse-navigation-bar-dropdown,
+body.jse-theme-dark .jse-dropdown-button .jse-dropdown-items,
+body.jse-theme-dark .jse-contextmenu .jse-dropdown-items,
+body.jse-theme-dark .jse-color-picker-popup .picker_wrapper.popup {
+  border-color: rgb(255 255 255 / 0.16);
+  background: rgb(30 34 44 / 0.82);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  color: var(--lg-text);
+}
+
+body.jse-theme-dark dialog.jse-modal[open] .jse-header,
+body.jse-theme-dark dialog.jse-modal[open] .jse-modal-contents .jse-shortcuts .jse-shortcut .jse-key,
+body.jse-theme-dark dialog.jse-modal[open] .jse-header button,
+body.jse-theme-dark .jse-status-bar {
+  background: rgb(255 255 255 / 0.08);
+  color: var(--lg-text);
+}
+
+body.jse-theme-dark dialog.jse-modal[open] :is(input, textarea, select, .jse-query),
+body.jse-theme-dark dialog.jse-modal[open] .svelte-select-list {
+  border-color: rgb(255 255 255 / 0.16);
+  background: rgb(255 255 255 / 0.08);
+  color: var(--lg-text);
+}
+
+/* ---------- file-drop (拖放遮罩: 默认隐藏, 拖拽悬停时显示虚线目标) ---------- */
+.panel .file-drop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.panel .file-drop > .file-drop-target {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: none;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  box-sizing: border-box;
+  z-index: 100;
+  border: 2px dashed rgb(10 132 255 / 0.45);
+  border-radius: var(--lg-radius-lg);
+  background: var(--lg-glass-quiet);
+  backdrop-filter: blur(10px) saturate(1.4);
+  color: var(--lg-text-2);
+  text-align: center;
+}
+
+.panel .file-drop > .file-drop-target.file-drop-dragging-over-frame {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+}
+
+.panel .file-drop > .file-drop-target.file-drop-dragging-over-frame.file-drop-dragging-over-target {
+  border-color: var(--lg-accent);
+  color: var(--lg-accent);
+  box-shadow: 0 0 0 4px var(--lg-accent-soft);
+}
+
+.panel .file-drop > .file-drop-target .drag-space-before {
+  flex: 1;
+}
+
+.panel .file-drop > .file-drop-target .drag-space-after {
+  flex: 2;
+}
+
+/* ---------- 面板操作区 (.panel-actions) ---------- */
+.panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 操作按钮: 库的 GlassButton (sm 玻璃圆钮 / 胶囊, 自带按压回弹与边缘折射), 这里只排布不覆盖材质 */
+.panel-actions .lg-button {
+  flex: none;
+  font-size: 13px;
+}
+
+/* 禁用态: 库只把文字与图标调淡, 玻璃底与阴影不变, 看上去仍像可点;
+   源面板没有文档时按钮已经是 disabled (再点也不会有反应), 这里整体压暗一档让状态可辨 */
+.panel-actions .lg-button:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.panel-actions .action-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--lg-radius-md);
+}
+
+.panel-actions .action-group .action-group-name {
+  padding: 0 0 5px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lg-text-3);
+}
+
+.panel-actions .action-group .action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* 差异计数: 真折射玻璃小胶囊 (.lg-glass + useRefraction), 与按钮同一材质 */
+.panel-actions .diff-counter {
+  text-align: center;
+  margin: 0 0 8px;
+  min-width: 100px;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border-radius: var(--lg-radius-pill);
+  --lg-glass-fill: rgb(255 255 255 / 0.3);
+  --lg-glass-blur: 16px;
+  --lg-glass-shadow: var(--lg-shadow-1);
+  color: var(--lg-text-2);
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+}
+
+body.jse-theme-dark .panel-actions .diff-counter {
+  --lg-glass-fill: rgb(255 255 255 / 0.08);
+}
+
+.diff-error {
+  color: var(--lg-danger);
+  margin: 10px;
+  text-align: center;
+}
+
+/* ---------- GlassMenu (玻璃浮层菜单: 顶栏 Settings / 编辑器设置 / 查询语言) ---------- */
+.glass-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.glass-menu {
+  position: fixed;
+  z-index: 1200;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  border-radius: var(--lg-radius-lg);
+  /* 库的逐表面覆盖变量: 菜单要压在 JSON 文本上, fill 比面板厚一点才读得清 */
+  --lg-glass-fill: rgb(252 252 253 / 0.88);
+  --lg-glass-blur: 34px;
+  --lg-glass-shadow: var(--lg-shadow-pop);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  font-size: 13px;
+  animation: glass-menu-in 140ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+body.jse-theme-dark .glass-menu {
+  --lg-glass-fill: rgb(32 34 40 / 0.9);
+}
+
+@keyframes glass-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.glass-menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.glass-menu-header {
+  padding: 6px 10px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lg-text-3);
+}
+
+.glass-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin: 0;
+  padding: 7px 10px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: var(--lg-radius-sm);
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 130ms ease;
+}
+
+.glass-menu-item:hover:not(:disabled),
+.glass-menu-item:focus-visible {
+  background: var(--lg-hover);
+  outline: none;
+}
+
+.glass-menu-item:disabled {
+  color: var(--lg-text-3);
+  opacity: 0.55;
+  cursor: default;
+}
+
+.glass-menu-item-icon {
+  display: inline-flex;
+  width: 14px;
+  justify-content: center;
+  color: var(--lg-text-3);
+}
+
+.glass-menu-item-label {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.glass-menu-item-check {
+  display: inline-flex;
+  width: 12px;
+  justify-content: center;
+  color: var(--lg-accent);
+  font-size: 11px;
+}
+
+.glass-menu-separator {
+  height: 1px;
+  margin: 5px 6px;
+  background: var(--lg-hairline);
+}
+
+/* ---------- 通知条 (.notification) ---------- */
+.notification {
+  position: fixed;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 9px 16px;
+  min-width: 240px;
+  border-radius: var(--lg-radius-pill);
+  border: 1px solid var(--lg-border);
+  background: var(--lg-glass-strong);
+  box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+  backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+  color: var(--lg-text);
+  text-align: center;
+  line-height: 1.35em;
+  animation: notification-in 220ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.notification .action {
+  border: none;
+  background: transparent;
+  color: var(--lg-accent);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 0 0 4px;
+  font: inherit;
+}
+
+.notification .action:hover {
+  text-decoration: underline;
+}
+
+@keyframes notification-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -8px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+/* ---------- diff 高亮 (JSONEditorPanel chunk 同值) ---------- */
+.panel .jse-main .jse-json-node.diff-create,
+.panel .jse-main .jse-json-node.diff-update,
+.panel .jse-main .jse-json-node.diff-child-update:not(.jse-expanded),
+.panel .jse-main .jse-json-node.diff-delete {
+  --jse-delimiter-color: rgba(0, 0, 0, 0.4);
+  --jse-tag-background: rgba(0, 0, 0, 0.3);
+  --jse-tag-color: rgba(255, 255, 255, 1);
+}
+
+.panel .jse-main .jse-json-node.diff-create .jse-key,
+.panel .jse-main .jse-json-node.diff-create .jse-value,
+.panel .jse-main .jse-json-node.diff-update .jse-key,
+.panel .jse-main .jse-json-node.diff-update .jse-value,
+.panel .jse-main .jse-json-node.diff-child-update:not(.jse-expanded) .jse-key,
+.panel .jse-main .jse-json-node.diff-child-update:not(.jse-expanded) .jse-value,
+.panel .jse-main .jse-json-node.diff-delete .jse-key,
+.panel .jse-main .jse-json-node.diff-delete .jse-value {
+  color: #000000e6;
+}
+
+.panel .jse-main .jse-json-node.diff-create {
+  --jse-contents-background-color: hsl(76, 52%, 70%);
+  --jse-selection-background-color: hsl(76, 32%, 60%);
+  --jse-selection-background-inactive-color: hsl(76, 42%, 65%);
+  --jse-hover-background-color: hsl(76, 42%, 65%);
+  --jse-context-menu-pointer-hover-background: hsl(76, 32%, 50%);
+  --jse-context-menu-pointer-background-highlight: hsl(76, 22%, 40%);
+  --jse-context-menu-pointer-background: hsl(76, 12%, 30%);
+  --jse-collapsed-items-background-color: var(--jse-selection-background-inactive-color);
+  --jse-collapsed-items-selected-background-color: hsl(76, 32%, 50%);
+}
+
+.panel .jse-main .jse-json-node.diff-update,
+.panel .jse-main .jse-json-node.diff-child-update:not(.jse-expanded) {
+  --jse-contents-background-color: hsl(41, 87%, 74%);
+  --jse-selection-background-color: hsl(41, 67%, 64%);
+  --jse-selection-background-inactive-color: hsl(41, 77%, 69%);
+  --jse-hover-background-color: hsl(41, 77%, 69%);
+  --jse-context-menu-pointer-hover-background: hsl(41, 67%, 54%);
+  --jse-context-menu-pointer-background-highlight: hsl(41, 57%, 44%);
+  --jse-context-menu-pointer-background: hsl(41, 47%, 34%);
+  --jse-collapsed-items-background-color: var(--jse-selection-background-inactive-color);
+  --jse-collapsed-items-selected-background-color: hsl(41, 67%, 54%);
+}
+
+.panel .jse-main .jse-json-node.diff-delete {
+  --jse-contents-background-color: hsl(8, 87%, 74%);
+  --jse-selection-background-color: hsl(8, 67%, 64%);
+  --jse-selection-background-inactive-color: hsl(8, 77%, 69%);
+  --jse-hover-background-color: hsl(8, 77%, 69%);
+  --jse-context-menu-pointer-hover-background: hsl(8, 67%, 54%);
+  --jse-context-menu-pointer-background-highlight: hsl(8, 57%, 44%);
+  --jse-context-menu-pointer-background: hsl(8, 47%, 34%);
+  --jse-collapsed-items-background-color: var(--jse-selection-background-inactive-color);
+  --jse-collapsed-items-selected-background-color: hsl(8, 67%, 54%);
+}
+
+/* blink-diff-value 差异导航闪烁 */
+@keyframes blink-diff-value {
+  0% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.panel .jse-main .jse-json-node.blink-diff-value {
+  animation: blink-diff-value 0.3s infinite;
+}
+
+/* ---------- 弹框: 液态玻璃窗口 (居中标题) ----------
+   全局弹窗淡入淡出 (hooks/useModalFade): 入场是纯 CSS 动画, 弹框挂载即播
+   (新节点, 动画必然播放), 遮罩淡入 + 卡片上浮回弹; 出场不在这里实现
+   (已挂载元素上替换 animation-name 会冻结在第一帧), 出场统一由
+   useModalFade 走 WAAPI, CSS 只负责 is-closing 期间屏蔽指针事件 */
+.modal-background {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 8vh 16px 24px;
+  overflow: auto;
+  background: rgb(10 14 22 / 0.26);
+  backdrop-filter: blur(10px) saturate(1.2);
+  animation: modal-layer-in 240ms ease-out both;
+}
+
+body.jse-theme-dark .modal-background {
+  background: rgb(0 0 0 / 0.46);
+}
+
+.modal-background.is-closing,
+.modal-background.is-closing .modal-foreground {
+  pointer-events: none;
+}
+
+@keyframes modal-layer-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-background {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
+/* .lg-card 是库 GlassCard 自己的类, 选择器带它才能压过库里 .lg-card.lg-glass 的材质变量 */
+.modal-foreground.lg-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+  max-width: 100%;
+  max-height: 84vh;
+  margin: 0 auto;
+  z-index: 1001;
+  outline: none;
+  overflow: hidden;
+  border-radius: var(--lg-radius-lg);
+  /* GlassCard 自带折射 (surface), 这里经逐表面变量调 fill / 模糊 / 投影 */
+  /* 半透明白底: 让遮罩后的氛围底色透进来, 保持玻璃质感 */
+  --lg-glass-fill: rgb(252 252 253 / 0.8);
+  --lg-glass-blur: 40px;
+  --lg-glass-shadow: var(--lg-shadow-2);
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  /* 卡片上浮回弹; 用 backwards 而非 both: 结束后不驻留关键帧,
+     库给卡片根写的内联 transform (折射/按压) 能立即接管 */
+  animation: modal-card-in 300ms cubic-bezier(0.34, 1.3, 0.64, 1) backwards;
+}
+
+body.jse-theme-dark .modal-foreground.lg-card {
+  --lg-glass-fill: rgb(30 32 38 / 0.84);
+}
+
+/* 标题栏: 只有居中标题 */
+.modal-titlebar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--lg-hairline);
+  background: linear-gradient(rgb(255 255 255 / 0.22), rgb(255 255 255 / 0));
+}
+
+/* 标题居中: 左侧放一颗与关闭按钮等宽的垫片, 两侧配平 */
+.modal-titlebar-space {
+  flex: none;
+  width: 26px;
+}
+
+/* 标题栏右侧的关闭按钮: 一颗安静的玻璃圆钮, 给没有 取消/确定 按钮的弹框一个显性关闭出口 */
+.modal-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--lg-text-3);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.modal-close:hover {
+  border-color: var(--lg-hairline);
+  background: var(--lg-hover);
+  color: var(--lg-text);
+}
+
+.modal-close:active {
+  background: var(--lg-press);
+}
+
+.modal-close .icon {
+  width: 14px;
+  height: 14px;
+}
+
+body.jse-theme-dark .modal-titlebar {
+  background: linear-gradient(rgb(255 255 255 / 0.08), rgb(255 255 255 / 0));
+}
+
+.modal-titlebar .modal-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lg-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-titlebar .modal-title svg {
+  color: var(--lg-text-3);
+}
+
+.modal {
+  flex: 1;
+  min-height: 0;
+  padding: 18px 20px 20px;
+  overflow: auto;
+  line-height: 1.5em;
+}
+
+.modal h2 {
+  font-size: 100%;
+  font-weight: 700;
+}
+
+.modal .modal-text {
+  margin: 10px 0;
+}
+
+.modal input.regular,
+.modal textarea.regular {
+  padding: 7px 10px;
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-field);
+  color: var(--lg-text);
+  border: 1px solid var(--lg-hairline);
+  width: 100%;
+  box-sizing: border-box;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.modal input.regular:focus,
+.modal textarea.regular:focus {
+  border-color: rgb(10 132 255 / 0.6);
+  box-shadow: 0 0 0 3px var(--lg-accent-soft);
+}
+
+.modal .error,
+.modal .error-message {
+  color: var(--lg-danger);
+  margin: 10px 0;
+}
+
+.modal .modal-action-menu {
+  padding: 20px 0 0;
+  text-align: right;
+  display: flex;
+  gap: 8px;
+}
+
+.modal .modal-action-menu .space {
+  flex: 1;
+}
+
+/* 弹框按钮全部用库的 GlassButton (sm, 玻璃/filled), 这里只做弹框内的字号与对齐适配 */
+.modal .lg-button {
+  font-size: 13px;
+}
+
+/* 首个按钮自动贴右 (无分组时整组按钮右对齐) */
+.modal .modal-action-menu > :first-child {
+  margin-left: auto;
+}
+
+/* 开住行: GlassSwitch + 文案; 分隔符行: 文案 + GlassMenu 选择器 */
+.modal .switch-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+}
+
+.modal .switch-row.disabled {
+  opacity: 0.5;
+}
+
+.modal .delimiter-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 弹框里的分段控件字号随弹框正文 */
+.modal .lg-track--segmented {
+  flex: none;
+}
+
+/* 配置弹框的 form 是 flex 列: 默认 stretch 会把选择器/分段控件拉满整列, 这里按内容宽度左对齐 */
+.modal.modal-configuration form > .modal-select,
+.modal.modal-configuration form > .lg-track--segmented,
+.modal.modal-configuration form > .switch-row {
+  align-self: flex-start;
+}
+
+/* Configuration 弹框: 表单列 + 预览列 */
+.modal.modal-configuration .columns {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 32px;
+}
+
+.modal.modal-configuration .columns .column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 420px;
+}
+
+.modal.modal-configuration .columns .column.left {
+  gap: 0;
+}
+
+.modal.modal-configuration h2 {
+  margin: 20px 0 5px;
+  padding: 0;
+  font-size: 100%;
+  font-weight: 700;
+}
+
+.modal.modal-configuration h2:first-child {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.modal.modal-configuration input.regular {
+  width: auto;
+}
+
+.modal.modal-configuration form {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0;
+}
+
+.modal.modal-configuration form table {
+  width: auto;
+}
+
+.modal.modal-configuration form table tr td {
+  padding: 3px 0;
+  vertical-align: middle;
+}
+
+.modal.modal-configuration form table tr td.indentation-types {
+  display: flex;
+  gap: 10px;
+}
+
+.modal.modal-configuration .modal-text {
+  margin: 5px 0;
+}
+
+.modal.modal-configuration .explanation {
+  display: inline-block;
+  margin-left: 5px;
+  cursor: help;
+}
+
+/* 行内代码片段样式 (字号说明与转义说明中的 "\n" / "\t") */
+.modal.modal-configuration code {
+  background: var(--lg-well);
+  border-radius: 5px;
+  padding: 1px 5px;
+  font-family: var(--jse-font-family-mono, monospace);
+}
+
+.modal.modal-configuration .preview-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 500px;
+  border-radius: var(--lg-radius-md);
+  border: 1px solid var(--lg-hairline);
+  overflow: hidden;
+}
+
+/* reload-warning: 解析器变更提示块 (提示条 + 保存并重载按钮) */
+.modal.modal-configuration .reload-warning {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--lg-radius-md);
+  border: 1px solid rgb(255 159 10 / 0.35);
+  background: rgb(255 159 10 / 0.14);
+  color: var(--lg-text);
+}
+
+.modal.modal-configuration .reload-warning .reload-message {
+  flex: 1;
+}
+
+.modal.modal-configuration .reload-warning .lg-button {
+  margin-left: 0;
+}
+
+.modal.modal-configuration .preview-container .jse-host {
+  flex: 1;
+  min-height: 0;
+}
+
+.modal.modal-configuration input.fontSize,
+.modal.modal-configuration input.indentation,
+.modal.modal-configuration input.max-line-length {
+  width: 80px;
+}
+
+.modal.modal-configuration table {
+  width: auto;
+}
+
+.modal.modal-configuration table td {
+  padding: 3px 0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.modal.modal-configuration tr.error-message td {
+  color: var(--lg-danger);
+}
+
+.modal-foreground.configuration {
+  width: 1080px;
+}
+
+/* CSV 弹框: 文本区 + 预览区 */
+.modal.modal-csv-import .modal-contents,
+.modal.modal-csv-export .modal-contents {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.modal-csv-import .modal-contents h2,
+.modal.modal-csv-export .modal-contents h2 {
+  padding: 0;
+  margin: 16px 0 6px;
+  font-size: 100%;
+}
+
+.modal.modal-csv-import .modal-contents h2:first-child,
+.modal.modal-csv-export .modal-contents h2:first-child {
+  margin-top: 0;
+}
+
+.modal.modal-csv-import .modal-contents .modal-text,
+.modal.modal-csv-export .modal-contents .modal-text {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.modal.modal-csv-import .modal-contents .modal-text label.disabled,
+.modal.modal-csv-export .modal-contents .modal-text label.disabled {
+  color: var(--lg-text-3);
+}
+
+.modal.modal-csv-import .modal-contents .preview-area,
+.modal.modal-csv-export .modal-contents .preview-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  border-radius: var(--lg-radius-md);
+  border: 1px solid var(--lg-hairline);
+  overflow: hidden;
+}
+
+.modal.modal-csv-import .modal-contents textarea.regular.csv-preview,
+.modal.modal-csv-export .modal-contents textarea.regular.csv-preview {
+  flex: 1;
+  min-height: 300px;
+  resize: none;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--jse-font-family-mono, consolas, menlo, monaco, "Ubuntu Mono", monospace);
+  font-size: var(--jse-font-size-mono, 13px);
+}
+
+.modal.modal-csv-import .modal-contents .preview-area textarea.regular.csv-preview.error,
+.modal.modal-csv-export .modal-contents .preview-area textarea.regular.csv-preview.error {
+  color: var(--lg-danger);
+}
+
+.modal.modal-csv-import .modal-contents .preview-area .jse-host,
+.modal.modal-csv-export .modal-contents .preview-area .jse-host {
+  flex: 1;
+  min-height: 0;
+}
+
+.modal.modal-csv-import .modal-contents .preview-area .truncated-overlay,
+.modal.modal-csv-export .modal-contents .preview-area .truncated-overlay {
+  position: relative;
+  top: -50px;
+  text-align: center;
+  height: 0;
+  overflow: visible;
+}
+
+.modal.modal-csv-import .modal-contents .preview-area .truncated-overlay .truncated,
+.modal.modal-csv-export .modal-contents .preview-area .truncated-overlay .truncated {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: var(--lg-radius-pill);
+  border: 1px solid rgb(255 159 10 / 0.4);
+  background: rgb(255 159 10 / 0.18);
+  backdrop-filter: blur(8px);
+  color: var(--lg-text);
+  font-size: 12px;
+}
+
+.modal.modal-csv-import .modal-contents .error,
+.modal.modal-csv-export .modal-contents .error {
+  color: var(--lg-danger);
+}
+
+.modal-foreground.csv-import,
+.modal-foreground.csv-export {
+  width: 800px;
+}
+
+/* ---------- Document properties 弹框 ---------- */
+.modal.modal-document-properties table.properties {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.modal.modal-document-properties table.properties th,
+.modal.modal-document-properties table.properties td {
+  vertical-align: middle;
+  height: 40px;
+}
+
+.modal.modal-document-properties table.properties th {
+  color: var(--lg-text-3);
+  font-weight: 500;
+  text-align: left;
+  padding-right: 20px;
+  width: 80px;
+}
+
+.modal.modal-document-properties table.properties td.space {
+  padding: 0;
+}
+
+.modal.modal-document-properties table.properties td.space .line {
+  border-top: 1px solid var(--lg-hairline);
+}
+
+.modal.modal-document-properties .document-name {
+  display: flex;
+  gap: 10px;
+}
+
+.modal.modal-document-properties .document-name input.regular {
+  flex: 1;
+}
+
+.modal.modal-document-properties .schema-container {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal.modal-document-properties .schema-container .schema-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Schema 解析失败: 描述替换为 Error 并以错误色提示 */
+.modal.modal-document-properties .schema-container .schema-description.error {
+  color: var(--lg-danger);
+}
+
+.modal-foreground.document-properties {
+  width: 520px;
+}
+
+/* ---------- New 确认弹框 ---------- */
+.modal-foreground.confirm {
+  width: 440px;
+}
+
+.modal.modal-confirm .modal-action-menu {
+  padding-top: 24px;
+}
+
+/* ---------- JSON Schema 弹框 ---------- */
+.modal.modal-schema p {
+  margin: 6px 0;
+}
+
+.modal.modal-schema .contents {
+  min-height: 300px;
+  margin-bottom: 0;
+}
+
+.modal.modal-schema .contents .config {
+  margin: 24px 0 10px;
+}
+
+.modal.modal-schema .contents .config .error {
+  color: var(--lg-danger);
+}
+
+.modal.modal-schema .contents .config .schema-panel-preview {
+  height: 300px;
+  overflow: auto;
+  border: 1px solid var(--lg-hairline);
+  background: var(--lg-field);
+  box-sizing: border-box;
+  border-radius: var(--lg-radius-md);
+  display: flex;
+}
+
+/* Schema 校验失败的详细信息: Ajv 的报错文本较长, 弱化显示且允许在错误信息里折行 */
+.modal.modal-schema .contents .schema-error-detail {
+  color: var(--lg-text-2);
+}
+
+/* 内嵌 Schema 的示例提示与"插入示例"按钮: 降低阅读门槛, 让用户知道怎么写 */
+.modal.modal-schema .contents .config .schema-example-hint {
+  margin: 6px 0 0;
+  color: var(--lg-text-3);
+  font-size: 12px;
+}
+
+.modal.modal-schema .contents .config .schema-example-row {
+  margin: 8px 0 12px;
+}
+
+.modal.modal-schema .contents .config.config-jsoneditor .text-schema {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.modal-schema .contents .config.config-jsoneditor .text-schema .jse-host {
+  flex: 1;
+  min-height: 0;
+}
+
+.modal.modal-schema .modal-action-menu {
+  padding-top: 10px;
+}
+
+.modal-foreground.schema {
+  width: 820px;
+}
+
+/* ---------- Transform 弹框 (查询 + 实时预览, 语言选择走 GlassMenu) ---------- */
+.modal-foreground.transform {
+  width: 880px;
+}
+
+.modal.modal-transform {
+  display: flex;
+  flex-direction: column;
+}
+
+.transform-toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.transform-toolbar-label {
+  color: var(--lg-text-3);
+  font-size: 12px;
+}
+
+.transform-toolbar-space {
+  flex: 1;
+}
+
+/* 查询语言说明 (.jse-description 同构): 玻璃提示条, 换语言即时跟随 */
+.transform-description {
+  flex: none;
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  max-height: 84px;
+  overflow: auto;
+  border-radius: var(--lg-radius-md);
+  border: 1px solid var(--lg-hairline);
+  background: var(--lg-well);
+  color: var(--lg-text-2);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.transform-description p {
+  margin: 0 0 6px;
+}
+
+.transform-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* 说明里的外链: 沙箱内无法跳转, 点击复制链接地址 (悬停 title 提示复制) */
+.transform-description a {
+  color: var(--lg-accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.transform-description a:hover {
+  text-decoration: underline;
+}
+
+.transform-description code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--lg-field);
+  font-family: var(--jse-font-family-mono);
+  font-size: 12px;
+}
+
+/* 弹窗内编辑器顶栏: 嵌在编辑器容器里的模式分段控件 + 动作按钮 */
+.modal-editor-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--lg-hairline);
+  color: var(--lg-text-2);
+}
+
+.modal-editor-bar .lg-track--segmented {
+  --lg-item-w: 56px;
+}
+
+.modal-editor-bar .lg-track--segmented .lg-track__item {
+  padding: 0 13px;
+}
+
+.modal-editor-bar .toolbar-separator {
+  margin: 0 4px;
+}
+
+.modal .modal-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-field);
+  color: var(--lg-text);
+  font-size: 13px;
+  box-shadow: var(--lg-inset);
+}
+
+.modal .modal-select:hover,
+.modal .modal-select[aria-expanded="true"] {
+  background: var(--lg-glass);
+}
+
+.transform-columns {
+  display: flex;
+  flex: none;
+  gap: 14px;
+  /* 固定内容高度: 弹框本身按内容自适应高度, 不靠 flex-grow 撑开 */
+  height: 340px;
+}
+
+.transform-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.transform-pane-header {
+  flex: none;
+  margin-bottom: 6px;
+  color: var(--lg-text-3);
+  font-size: 12px;
+}
+
+.transform-query {
+  flex: 1;
+  min-height: 0;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--lg-border);
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-field);
+  color: var(--lg-text);
+  font-family: var(--jse-font-family-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  resize: none;
+}
+
+.transform-query:focus-visible {
+  outline: none;
+  border-color: var(--lg-accent);
+  box-shadow: 0 0 0 3px var(--lg-accent-soft);
+}
+
+.transform-result {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  overflow: auto;
+  border: 1px solid var(--lg-hairline);
+  border-radius: var(--lg-radius-md);
+  background: var(--lg-well);
+  color: var(--lg-text);
+  font-family: var(--jse-font-family-mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.transform-result.error {
+  border-color: transparent;
+  background: var(--lg-danger-soft);
+  color: var(--lg-danger);
+}
+
+.transform-empty {
+  color: var(--lg-text-3);
+}
+
+@media only screen and (max-width: 860px) {
+  .transform-columns {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .transform-pane {
+    min-height: 150px;
+  }
+
+  .transform-query,
+  .transform-result {
+    height: 150px;
+  }
+}
+
+/* ---------- 顶栏品牌与汉堡菜单 ---------- */
+.application-menu__hamburger {
+  display: none;
+  color: var(--lg-text-2);
+  cursor: pointer;
+  border-radius: var(--lg-radius-md);
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: background-color 150ms ease;
+}
+
+.application-menu__hamburger:hover,
+.application-menu__hamburger:focus {
+  background: var(--lg-hover);
+  color: var(--lg-text);
+}
+
+.application-menu__hamburger-input {
+  display: none;
+}
+
+/* 窄屏: 品牌字号缩一档 (不用 transform, 会让位给 hover 的 Q 弹动画), 菜单组收纳进汉堡下拉 */
+@media only screen and (max-width: 768px) {
+  .application-menu__brand {
+    font-size: 14px;
+  }
+
+  .application-menu__hamburger {
+    display: inline-block;
+  }
+
+  .application-menu__group {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 10px;
+    z-index: 100;
+    padding: 6px;
+    border-radius: var(--lg-radius-lg);
+    border: 1px solid var(--lg-border);
+    background: var(--lg-glass-strong);
+    box-shadow: var(--lg-shadow-pop), var(--lg-inset);
+    backdrop-filter: blur(var(--lg-blur-strong)) saturate(var(--lg-saturate));
+    color: var(--lg-text);
+  }
+
+  .application-menu__hamburger-input:checked ~ .application-menu__group {
+    display: block;
+  }
+}
+
+/* ---------- 响应式: 面板菜单按面板自身宽度收拢 ---------- */
+/* 面板宽度由 splitter 与视口共同决定: 当拖到"排满宽度"以下时, PanelMenu 挂上 .compact,
+   收拢为仅图标. 直接用实测排满宽度驱动, 不再依赖固定
+   容器断点, 以免与"松手恢复 = 排满宽度"的恢复尺寸互相打架 */
+.panel .panel-menu.compact .menu-label,
+.panel .panel-menu.compact .lg-button__label {
+  display: none;
+}
+
+.panel .panel-menu.compact .menu-button {
+  padding: 7px 7px;
+}
+
+/* 未保存提示与弹性占位在窄面板下让位给文档名与按钮组 (Ctrl+S 仍可立即保存) */
+.panel .panel-menu.compact .unsaved-changes,
+.panel .panel-menu.compact .space {
+  display: none;
+}
+
+/* 文档名截断, 保证 schema 盾牌与按钮组留在面板内 */
+@container (max-width: 520px) {
+  .panel .panel-menu .menu-button.name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* 极窄面板: 进一步压缩图标按钮留白 */
+@container (max-width: 420px) {
+  .panel .panel-menu .menu-button {
+    padding: 7px 5px;
+  }
+}
+
+/* ---------- 窄视口: 上下布局 ---------- */
+/* 整页退出固定视口高度转文档流滚动, 左右面板各 600px 高堆叠,
+   splitter 隐藏, 操作条转横向; 面板容器改为玻璃板, 与并排时的卡片观感一致 */
+@media only screen and (max-width: 980px) {
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+  }
+
+  #root {
+    height: auto;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .app::before {
+    position: fixed;
+  }
+
+  .app .body {
+    flex-direction: column;
+    overflow: auto;
+    padding: 10px 12px 20px;
+  }
+
+  .app .body .contents-panel {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .app .body .contents-panel .left-panel,
+  .app .body .contents-panel .right-panel {
+    width: 100%;
+    height: 600px;
+    /* 覆盖内联 flex (`${ratio} 1 0%`): 窄屏按固定高度堆叠, 不按 splitter 比例分配 */
+    flex: unset !important;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  /* 窄屏无 splitter 可拖, 收起态不再需要让位动画: 直接不占位 */
+  .app .body .contents-panel .left-panel.is-collapsed,
+  .app .body .contents-panel .right-panel.is-collapsed {
+    display: none;
+  }
+
+  .app .body .contents-panel .center-panel {
+    width: 100%;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border-radius: var(--lg-radius-lg);
+    border: 1px solid var(--lg-border);
+    background: var(--lg-glass-quiet);
+    box-shadow: var(--lg-inset);
+  }
+
+  .app .body .contents-panel .center-panel .empty-space-top {
+    display: none;
+  }
+
+  .app .body .contents-panel .center-panel .draggable-splitter {
+    visibility: hidden;
+  }
+
+  .app .body .panel-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* 行布局下每个操作组 (名称在上、按钮在下) 整体垂直居中, 不被最高的组拉伸错位 */
+  .app .body .panel-actions .action-group {
+    align-self: center;
+  }
+
+  .app .body .panel-actions .action-buttons {
+    align-items: center;
+  }
+
+  .app .body .panel-actions .diff-counter {
+    min-width: 0;
+    margin: 0;
+  }
+}
+
+/* ---------- 弹框窄屏 ---------- */
+@media only screen and (max-width: 760px) {
+  .modal-background {
+    padding: 14px;
+    align-items: flex-start;
+  }
+
+  .modal-foreground {
+    max-height: calc(100vh - 28px);
+  }
+
+  .modal-titlebar {
+    padding: 10px 12px;
+  }
+
+  .modal {
+    padding: 14px 14px 16px;
+  }
+}
+
+/* ---------- 降低透明度 / 减少动效偏好 ---------- */
+/* 系统要求降低透明度时, 玻璃退化为实色表面, 保证可读性 */
+@media (prefers-reduced-transparency: reduce) {
+  /* 组件库自身会把 --lg-fill 退化为近实色; 这里再把逐表面 fill 钉到实色并关掉模糊 */
+  .lg-glass {
+    --lg-glass-fill: var(--lg-surface-solid);
+    --lg-glass-blur: 0px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app .body .contents-panel .left-panel,
+  .app .body .contents-panel .right-panel,
+  .notification {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
+
+/* ---------- Settings NiceDay: Draggable Liquid Glass ----------
+   整层 portal 到 body, z-index 高于全屏层 / 菜单 / toast (最高 9999);
+   粒子是同一层透明 canvas, 只在打开时挂载, 关闭即停 rAF */
+.nice-day-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* 遮罩: 半透明 + 模糊, 不是黑底; 打开时淡入. 纯视觉, 点空白处不关闭,
+   pointer-events: auto 只为拦住点击不穿透到下层编辑器, 光标保持默认 */
+.nice-day-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
+  cursor: default;
+  background: rgb(10 14 22 / 0.26);
+  backdrop-filter: blur(10px) saturate(1.2);
+  animation: nice-day-fade-in 360ms ease-out both;
+}
+
+body.jse-theme-dark .nice-day-backdrop {
+  background: rgb(0 0 0 / 0.46);
+}
+
+.nice-day-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation: nice-day-fade-in 520ms ease-out both;
+}
+
+/* 锚点不带任何持久 transform: 拖拽基准只量它, 不受 blob 的弹簧位移 /
+   usePress 缩放影响. 入场动画 (淡入 + 轻微上浮回弹) 挂在锚点层,
+   blob 的 transform 被拖拽弹簧逐帧接管, 不能再挂 CSS 动画; 按下拖拽
+   时 measureBase() 会重新量锚点矩形, 动画期间基准误差自愈 */
+.nice-day-anchor {
+  position: relative;
+  z-index: 2;
+  width: min(460px, calc(100vw - 32px));
+  pointer-events: auto;
+  animation: nice-day-card-in 460ms cubic-bezier(0.34, 1.35, 0.64, 1) both;
+}
+
+@keyframes nice-day-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nice-day-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nice-day-backdrop,
+  .nice-day-particles,
+  .nice-day-anchor {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
+/* 关闭: 出场淡出由 useModalFade 对整层走 WAAPI (见 hooks/useModalFade.ts,
+   已挂载元素上替换 CSS 动画会冻在第一帧, 故不用 keyframes 做出场);
+   is-closing 只负责淡出期间屏蔽指针 (backdrop / anchor 显式开了 auto) */
+.nice-day-layer.is-closing .nice-day-backdrop,
+.nice-day-layer.is-closing .nice-day-anchor {
+  pointer-events: none;
+}
+
+/* 大圆角 + 强 rim; 再留一层柔和白玻璃 fill, 让正文在折射之上仍读得清 */
+.nice-day-blob.lg-glass {
+  /* 比常规卡片透得多: 保证厚透镜的折射可见, 呈现透镜效果而非磨砂白卡 */
+  --lg-glass-fill: rgb(255 255 255 / 0.36);
+  --lg-glass-blur: 14px;
+  --lg-saturate: 1.6;
+  --lg-rim-opacity: 1;
+  --lg-glass-shadow:
+    0 22px 54px rgb(24 24 48 / 0.2), 0 4px 12px rgb(24 24 48 / 0.1), inset 0 0 0 1px rgb(255 255 255 / 0.62);
+  width: 100%;
+  border-radius: 72px;
+  color: var(--lg-text);
+  font-family: var(--main-font-family);
+  overflow: hidden;
+  will-change: transform;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+body.jse-theme-dark .nice-day-blob.lg-glass {
+  --lg-glass-fill: rgb(30 32 40 / 0.5);
+  --lg-glass-shadow:
+    0 22px 54px rgb(0 0 0 / 0.42), 0 4px 12px rgb(0 0 0 / 0.3), inset 0 0 0 1px rgb(255 255 255 / 0.16);
+}
+
+.nice-day-blob[data-dragging] {
+  cursor: grabbing;
+}
+
+.nice-day-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 30px 8px 38px;
+}
+
+.nice-day-heart {
+  display: block;
+  width: 19px;
+  height: 19px;
+  flex: none;
+}
+
+/* "drag me" 位置直接显示完整日期标题 (静态, 不参与打字机) */
+.nice-day-titlebar-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--lg-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nice-day-close.lg-button {
+  --lg-h: 26px;
+  width: 26px;
+  min-width: 26px;
+  height: 26px;
+  flex: none;
+  padding: 0;
+  border-radius: var(--lg-radius-pill);
+  color: var(--lg-text-2);
+}
+
+.nice-day-close .lg-button__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.nice-day-content {
+  padding: 6px 48px 44px;
+}
+
+.nice-day-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--lg-text-2);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.nice-day-line {
+  min-height: 1.7em;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* 打字机末尾光标: 打字过程中与写完以后都持续闪烁 */
+.nice-day-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: #ea81b0;
+  animation: nice-day-blink 1s steps(2, start) infinite;
+}
+
+@keyframes nice-day-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
