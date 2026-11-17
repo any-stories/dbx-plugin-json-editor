@@ -7,7 +7,7 @@
   "source": "https://github.com/any-stories/dbx-plugin-json-editor",
   "homepage": "https://github.com/any-stories/dbx-plugin-json-editor",
   "license": "MIT",
-  "releaseNotes": "Initial release.",
+  "releaseNotes": "Initial release: professional JSON editing workspace with Code, Tree and Table views, dual-pane editing, formatting, validation and diff.",
   "localizations": {
     "zh-CN": {
       "name": "JSON 编辑器",
